@@ -1,0 +1,300 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ============================================================
+ *  ALMA DESIGN SYSTEM — Passport Photo & Print Studio
+ *  Warm, organic, editorial, premium. See DESIGN.md.
+ * ============================================================
+ */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans-body);
+  --font-display: var(--font-sans-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Alma brand tokens */
+  --color-alma-support: #c3d638;
+  --color-alma-orange: #f3b34f;
+  --color-alma-accent: #146c84;
+  --color-alma-teal: #61929a;
+  --color-alma-muted: #cecca1;
+  --color-alma-kiwi: #aadf49;
+  --color-alma-collard: #3c5627;
+  --color-alma-aioli: #f7f5ed;
+  --color-alma-yogurt: #fffdf5;
+  --color-alma-surface: #fffefc;
+  --color-alma-teriyaki: #33140c;
+  --color-alma-gray: #a1a1a1;
+
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 5px);
+  --radius-2xl: calc(var(--radius) + 17px);
+
+  --shadow-soft: 0 24px 60px -24px rgb(51 20 12 / 0.22);
+  --shadow-card: 0 1px 2px rgb(51 20 12 / 0.05), 0 14px 36px -16px rgb(51 20 12 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(51 20 12 / 0.06), 0 24px 48px -16px rgb(51 20 12 / 0.2);
+
+  --animate-float-slow: floatSlow 7s ease-in-out infinite;
+  --animate-float-slower: floatSlow 9s ease-in-out 1.2s infinite;
+}
+
+:root {
+  --radius: 0.9375rem;
+
+  /* Alma light — warm off-whites, deep teriyaki ink, collard primary */
+  --background: #f7f5ed;
+  --foreground: #33140c;
+  --card: #fffefc;
+  --card-foreground: #33140c;
+  --popover: #fffdf5;
+  --popover-foreground: #33140c;
+  --primary: #3c5627;
+  --primary-foreground: #fffdf5;
+  --secondary: #efecdb;
+  --secondary-foreground: #3c5627;
+  --muted: #f0eee1;
+  --muted-foreground: #6e6754;
+  --accent: #edf2d8;
+  --accent-foreground: #31471f;
+  --destructive: #b3402a;
+  --border: #e5e1cd;
+  --input: #e5e1cd;
+  --ring: #146c84;
+  --chart-1: #3c5627;
+  --chart-2: #146c84;
+  --chart-3: #f3b34f;
+  --chart-4: #61929a;
+  --chart-5: #aadf49;
+  --sidebar: #fffefc;
+  --sidebar-foreground: #33140c;
+  --sidebar-primary: #3c5627;
+  --sidebar-primary-foreground: #fffdf5;
+  --sidebar-accent: #f0eee1;
+  --sidebar-accent-foreground: #33140c;
+  --sidebar-border: #e5e1cd;
+  --sidebar-ring: #146c84;
+
+  --alma-gradient-primary: linear-gradient(135deg, #3c5627 0%, #2c471b 55%, #14684f 100%);
+  --alma-gradient-hero: radial-gradient(60% 60% at 20% 25%, rgb(170 223 73 / 0.35), transparent 70%),
+    radial-gradient(55% 55% at 82% 18%, rgb(243 179 79 / 0.28), transparent 70%),
+    radial-gradient(70% 60% at 55% 95%, rgb(97 146 154 / 0.22), transparent 72%);
+  --alma-grid-line: rgb(60 86 39 / 0.09);
+}
+
+.dark {
+  /* Alma dark — warm charcoal, cream ink, kiwi highlights */
+  --background: #17130e;
+  --foreground: #f3edde;
+  --card: #201a14;
+  --card-foreground: #f3edde;
+  --popover: #241d16;
+  --popover-foreground: #f3edde;
+  --primary: #a9cc55;
+  --primary-foreground: #1c2409;
+  --secondary: #2b241c;
+  --secondary-foreground: #e8e2cf;
+  --muted: #292219;
+  --muted-foreground: #b0a88f;
+  --accent: #2e3a1e;
+  --accent-foreground: #d9ecad;
+  --destructive: #e06a50;
+  --border: rgb(243 237 222 / 0.14);
+  --input: rgb(243 237 222 / 0.16);
+  --ring: #7db8c9;
+  --chart-1: #a9cc55;
+  --chart-2: #7db8c9;
+  --chart-3: #f3b34f;
+  --chart-4: #8fb6bc;
+  --chart-5: #c3d638;
+  --sidebar: #201a14;
+  --sidebar-foreground: #f3edde;
+  --sidebar-primary: #a9cc55;
+  --sidebar-primary-foreground: #1c2409;
+  --sidebar-accent: #2b241c;
+  --sidebar-accent-foreground: #f3edde;
+  --sidebar-border: rgb(243 237 222 / 0.14);
+  --sidebar-ring: #7db8c9;
+
+  --alma-gradient-primary: linear-gradient(135deg, #4a6a2f 0%, #3c5627 55%, #17705a 100%);
+  --alma-grid-line: rgb(243 237 222 / 0.07);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: rgb(170 223 73 / 0.45);
+    color: #241505;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-sans-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  /* Editorial content container — max 1200px, 80px desktop / 20px mobile padding */
+  .container-editorial {
+    @apply mx-auto w-full max-w-[1200px] px-5 md:px-20;
+  }
+  .container-narrow {
+    @apply mx-auto w-full max-w-[860px] px-5 md:px-10;
+  }
+
+  /* Primary CTA — organic green gradient */
+  .btn-gradient {
+    background-image: var(--alma-gradient-primary);
+    color: #fffdf5;
+    box-shadow: 0 10px 24px -10px rgb(60 86 39 / 0.55), inset 0 1px 0 rgb(255 253 245 / 0.18);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  }
+  .btn-gradient:hover {
+    filter: brightness(1.07);
+    box-shadow: 0 14px 30px -10px rgb(60 86 39 / 0.6), inset 0 1px 0 rgb(255 253 245 / 0.22);
+  }
+  .btn-gradient:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  /* Soft organic hero wash */
+  .hero-wash {
+    background-image: var(--alma-gradient-hero);
+  }
+
+  /* Fine dotted paper texture for hero / cards */
+  .dot-grid {
+    background-image: radial-gradient(var(--alma-grid-line) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Checkered transparency indicator */
+  .checker-bg {
+    background-image:
+      linear-gradient(45deg, rgb(0 0 0 / 0.06) 25%, transparent 25%, transparent 75%, rgb(0 0 0 / 0.06) 75%),
+      linear-gradient(45deg, rgb(0 0 0 / 0.06) 25%, transparent 25%, transparent 75%, rgb(0 0 0 / 0.06) 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+  }
+
+  /* Custom scrollbars for long panels */
+  .scroll-slim {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(97 146 154 / 0.55) transparent;
+  }
+  .scroll-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb {
+    background: rgb(97 146 154 / 0.45);
+    border-radius: 999px;
+  }
+  .scroll-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* SEO/GEO prose blocks */
+  .prose-alma {
+    @apply text-[15.5px] leading-[1.85] text-foreground/90;
+  }
+  .prose-alma h2 {
+    @apply mt-10 mb-3 text-2xl font-semibold;
+  }
+  .prose-alma h3 {
+    @apply mt-8 mb-2 text-lg font-semibold;
+  }
+  .prose-alma p {
+    @apply mb-4;
+  }
+  .prose-alma ul {
+    @apply mb-4 list-disc space-y-1.5 pl-5;
+  }
+  .prose-alma ol {
+    @apply mb-4 list-decimal space-y-1.5 pl-5;
+  }
+  .prose-alma a {
+    @apply font-medium text-alma-accent underline decoration-alma-accent/40 underline-offset-4 hover:decoration-alma-accent;
+  }
+  .prose-alma table {
+    @apply mb-5 w-full border-collapse overflow-hidden text-sm;
+  }
+  .prose-alma th {
+    @apply border border-border bg-secondary px-3 py-2 text-left font-semibold;
+  }
+  .prose-alma td {
+    @apply border border-border px-3 py-2 align-top;
+  }
+  .prose-alma blockquote {
+    @apply my-5 border-l-4 border-alma-collard/40 bg-secondary/60 px-4 py-3 italic;
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
