@@ -75,7 +75,7 @@ export function SizeStep() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-10">
-      <div className="space-y-5">
+      <div className="min-w-0 space-y-5">
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
@@ -230,7 +230,7 @@ export function SizeStep() {
       </div>
 
       {/* Info panel */}
-      <aside className="space-y-4">
+      <aside className="min-w-0 space-y-4">
         <div className="rounded-2xl border bg-card p-6 shadow-card">
           <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
             Selected size

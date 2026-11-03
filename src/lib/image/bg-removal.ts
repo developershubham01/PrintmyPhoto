@@ -1,18 +1,15 @@
 /**
- * Automatic background removal — border flood-fill.
+ * Automatic background removal — robust border flood-fill with gradient adaptation.
  *
- * HONESTY CONTRACT: this is a fast, fully-local *approximation*. It works well on
- * plain, evenly-lit backgrounds and will struggle on busy scenes, gradients or
- * when the subject's colors are close to the backdrop. The UI must always label
- * the result as approximate and let the user revert.
- *
- * Algorithm:
- * 1. Sample the 1px border ring of the cropped photo and average it → backdrop seed color.
- * 2. BFS from every border pixel whose color is within `tolerance` of the seed.
- * 3. A neighbor joins the mask ONLY if it is close to the seed color. We deliberately do
- *    NOT region-grow toward similar neighbors: that walks anti-aliased gradients into the
- *    subject and erodes faces. Seed-only matching is safer and predictable.
- * 4. The binary mask is feathered (3×3 box blur) for natural edges.
+ * Designed specifically for portrait / passport photos:
+ * 1. Sample backdrop reference colors from top-left, top-center, and top-right corners/edges.
+ *    (Top 15% and upper side edges are guaranteed backdrop in portrait framing).
+ * 2. Calculate local expected background color via bilinear/horizontal interpolation
+ *    to handle realistic room lighting gradients across the backdrop.
+ * 3. Seed BFS flood-fill from top border (y=0) and upper left/right borders (y <= h * 0.7).
+ *    Never seed from the bottom edge or lower sides where clothing/shoulders are located.
+ * 4. Flood fill connects all outer backdrop pixels matching the backdrop reference within `tolerance`.
+ * 5. Feather edges (separable 5x5 box blur) to produce smooth, non-jagged cutout boundaries.
  */
 
 export interface RemovalResult {
@@ -20,6 +17,29 @@ export interface RemovalResult {
   removedRatio: number;
 }
 
+/** Color tuple in [r, g, b] */
+type RGB = [number, number, number];
+
+/** Calculate perceptual color distance between two RGB colors */
+function colorDistance(
+  r1: number,
+  g1: number,
+  b1: number,
+  r2: number,
+  g2: number,
+  b2: number,
+): number {
+  const dr = r1 - r2;
+  const dg = g1 - g2;
+  const db = b1 - b2;
+  // Perceptual weighting: human eye is most sensitive to green, then red, then blue
+  return Math.sqrt(0.299 * dr * dr + 0.587 * dg * dg + 0.114 * db * db);
+}
+
+/**
+ * Removes the background of a portrait photo using adaptive corner sampling,
+ * gradient interpolation, and boundary-seeded flood-fill.
+ */
 export function removeBackgroundFlat(
   source: HTMLCanvasElement,
   toleranceInput = 32,
@@ -29,116 +49,210 @@ export function removeBackgroundFlat(
   const ctx = source.getContext("2d", { willReadFrequently: true })!;
   const image = ctx.getImageData(0, 0, w, h);
   const data = image.data;
-
-  // Tolerance 0-100 (UI) → RGB distance 0-255 scale. 32 ≈ default balanced.
-  const tol = Math.max(4, Math.min(120, toleranceInput * 1.2));
-
-  // --- 1. Sample border ring -------------------------------------------------
-  let sr = 0;
-  let sg = 0;
-  let sb = 0;
-  let count = 0;
-  const sampleAt = (x: number, y: number) => {
-    const i = (y * w + x) * 4;
-    sr += data[i];
-    sg += data[i + 1];
-    sb += data[i + 2];
-    count++;
-  };
-  for (let x = 0; x < w; x++) {
-    sampleAt(x, 0);
-    sampleAt(x, h - 1);
-  }
-  for (let y = 0; y < h; y++) {
-    sampleAt(0, y);
-    sampleAt(w - 1, y);
-  }
-  const seedR = sr / count;
-  const seedG = sg / count;
-  const seedB = sb / count;
-
-  // --- 2. BFS flood fill -----------------------------------------------------
   const total = w * h;
-  const mask = new Uint8Array(total); // 1 = background
+
+  // Map tolerance slider (8-80) to perceptual distance threshold
+  const threshold = Math.max(12, Math.min(130, toleranceInput * 1.45));
+
+  // --- 1. Sample backdrop reference regions ---------------------------------
+  // In portrait photos, the person's head is centered, so the top-left, top-center,
+  // and top-right are guaranteed background.
+  const sampleRegion = (
+    startX: number,
+    endX: number,
+    startY: number,
+    endY: number,
+  ): RGB => {
+    let rSum = 0;
+    let gSum = 0;
+    let bSum = 0;
+    let count = 0;
+    const step = Math.max(1, Math.floor(Math.min(endX - startX, endY - startY) / 10));
+
+    for (let y = startY; y < endY; y += step) {
+      for (let x = startX; x < endX; x += step) {
+        const i = (y * w + x) * 4;
+        rSum += data[i];
+        gSum += data[i + 1];
+        bSum += data[i + 2];
+        count++;
+      }
+    }
+    if (count === 0) return [240, 240, 240];
+    return [rSum / count, gSum / count, bSum / count];
+  };
+
+  const cornerW = Math.max(4, Math.floor(w * 0.22));
+  const cornerH = Math.max(4, Math.floor(h * 0.20));
+  const topH = Math.max(2, Math.floor(h * 0.06));
+
+  const tlColor = sampleRegion(0, cornerW, 0, cornerH);
+  const trColor = sampleRegion(w - cornerW, w, 0, cornerH);
+  const tcColor = sampleRegion(Math.floor(w * 0.4), Math.floor(w * 0.6), 0, topH);
+
+  // Function to compute expected background color for any pixel (x, y)
+  // using horizontal interpolation to gracefully handle lateral light gradients
+  const getExpectedBg = (x: number): RGB => {
+    const halfW = w / 2;
+    if (x <= halfW) {
+      const t = halfW > 0 ? x / halfW : 0;
+      return [
+        tlColor[0] * (1 - t) + tcColor[0] * t,
+        tlColor[1] * (1 - t) + tcColor[1] * t,
+        tlColor[2] * (1 - t) + tcColor[2] * t,
+      ];
+    } else {
+      const t = halfW > 0 ? (x - halfW) / halfW : 0;
+      return [
+        tcColor[0] * (1 - t) + trColor[0] * t,
+        tcColor[1] * (1 - t) + trColor[1] * t,
+        tcColor[2] * (1 - t) + trColor[2] * t,
+      ];
+    }
+  };
+
+  // --- 2. Initialize Seed Queue ---------------------------------------------
+  const mask = new Uint8Array(total); // 1 = background, 0 = subject
   const queue = new Int32Array(total);
   let head = 0;
   let tail = 0;
 
-  const push = (idx: number) => {
+  const pushSeed = (idx: number) => {
     if (!mask[idx]) {
       mask[idx] = 1;
       queue[tail++] = idx;
     }
   };
 
-  const distToSeed = (i: number): number => {
-    const p = i * 4;
-    const dr = data[p] - seedR;
-    const dg = data[p + 1] - seedG;
-    const db = data[p + 2] - seedB;
-    return Math.sqrt(dr * dr + dg * dg + db * db);
-  };
-
-  // Seed from border pixels close to the average backdrop color.
-  const borderIndices: number[] = [];
+  // Check top border (y = 0)
   for (let x = 0; x < w; x++) {
-    borderIndices.push(x, (h - 1) * w + x);
-  }
-  for (let y = 0; y < h; y++) {
-    borderIndices.push(y * w, y * w + w - 1);
-  }
-  for (const idx of borderIndices) {
-    if (distToSeed(idx) <= tol) push(idx);
+    const p = x * 4;
+    const [eR, eG, eB] = getExpectedBg(x);
+    const d = colorDistance(data[p], data[p + 1], data[p + 2], eR, eG, eB);
+    if (d <= threshold * 1.35) {
+      pushSeed(x);
+    }
   }
 
+  // Check upper left and right borders (y up to 70% of height, avoiding chest/shoulders)
+  const maxSideY = Math.floor(h * 0.70);
+  for (let y = 1; y < maxSideY; y++) {
+    // Left edge (x = 0)
+    const leftIdx = y * w;
+    const lp = leftIdx * 4;
+    const [leR, leG, leB] = tlColor;
+    if (colorDistance(data[lp], data[lp + 1], data[lp + 2], leR, leG, leB) <= threshold * 1.35) {
+      pushSeed(leftIdx);
+    }
+
+    // Right edge (x = w - 1)
+    const rightIdx = y * w + w - 1;
+    const rp = rightIdx * 4;
+    const [reR, reG, reB] = trColor;
+    if (colorDistance(data[rp], data[rp + 1], data[rp + 2], reR, reG, reB) <= threshold * 1.35) {
+      pushSeed(rightIdx);
+    }
+  }
+
+  // Fallback: if corners had shadows and strict check missed, guarantee corner seeds
+  if (tail === 0) {
+    pushSeed(0);
+    pushSeed(w - 1);
+  }
+
+  // --- 3. Flood Fill BFS -----------------------------------------------------
   while (head < tail) {
     const cur = queue[head++];
     const cx = cur % w;
-    const cy = (cur - cx) / w;
+    const cy = Math.floor(cur / w);
 
-    // Visit 4 neighbours
-    if (cx > 0) tryVisit(cur - 1);
-    if (cx < w - 1) tryVisit(cur + 1);
-    if (cy > 0) tryVisit(cur - w);
-    if (cy < h - 1) tryVisit(cur + w);
+    const cp = cur * 4;
+    const curR = data[cp];
+    const curG = data[cp + 1];
+    const curB = data[cp + 2];
 
-    function tryVisit(next: number) {
-      if (mask[next]) return;
-      if (distToSeed(next) <= tol) {
-        mask[next] = 1;
-        queue[tail++] = next;
+    // Visit 4-connected neighbors
+    if (cx > 0) visitNeighbor(cur - 1, cx - 1, cy);
+    if (cx < w - 1) visitNeighbor(cur + 1, cx + 1, cy);
+    if (cy > 0) visitNeighbor(cur - w, cx, cy - 1);
+    if (cy < h - 1) visitNeighbor(cur + w, cx, cy + 1);
+
+    function visitNeighbor(nextIdx: number, nx: number, ny: number) {
+      if (mask[nextIdx]) return;
+
+      const np = nextIdx * 4;
+      const nr = data[np];
+      const ng = data[np + 1];
+      const nb = data[np + 2];
+
+      const [eR, eG, eB] = getExpectedBg(nx);
+      const distToExpected = colorDistance(nr, ng, nb, eR, eG, eB);
+
+      // Protect lower torso/chest area (center horizontally, bottom 30%)
+      const inTorsoZone = ny > h * 0.68 && nx > w * 0.22 && nx < w * 0.78;
+      const effectiveThreshold = inTorsoZone ? threshold * 0.75 : threshold;
+
+      // Pixel matches expected background
+      if (distToExpected <= effectiveThreshold) {
+        mask[nextIdx] = 1;
+        queue[tail++] = nextIdx;
+        return;
+      }
+
+      // Or if it's very close to current background neighbor (handles smooth soft wall shadows)
+      const stepDist = colorDistance(nr, ng, nb, curR, curG, curB);
+      if (stepDist <= 12 && distToExpected <= effectiveThreshold * 1.25 && !inTorsoZone) {
+        mask[nextIdx] = 1;
+        queue[tail++] = nextIdx;
       }
     }
   }
 
-  const removed = tail;
-  const removedRatio = removed / total;
+  const removedCount = tail;
+  const removedRatio = removedCount / total;
 
-  // --- 3. Feather the mask (3×3 box blur) ------------------------------------
-  const blurred = new Float32Array(total);
+  // --- 4. Feather the Mask (Fast Separable 5x5 Box Blur) --------------------
+  // Horizontal pass
+  const tempBlur = new Float32Array(total);
+  const radius = 2; // radius 2 -> 5x5 window
   for (let y = 0; y < h; y++) {
+    const rowOffset = y * w;
     for (let x = 0; x < w; x++) {
       let sum = 0;
-      let n = 0;
-      for (let dy = -1; dy <= 1; dy++) {
-        const yy = y + dy;
-        if (yy < 0 || yy >= h) continue;
-        for (let dx = -1; dx <= 1; dx++) {
-          const xx = x + dx;
-          if (xx < 0 || xx >= w) continue;
-          sum += mask[yy * w + xx];
-          n++;
+      let count = 0;
+      for (let dx = -radius; dx <= radius; dx++) {
+        const nx = x + dx;
+        if (nx >= 0 && nx < w) {
+          sum += mask[rowOffset + nx];
+          count++;
         }
       }
-      blurred[y * w + x] = sum / n;
+      tempBlur[rowOffset + x] = sum / count;
     }
   }
 
-  // --- 4. Write alpha ---------------------------------------------------------
-  for (let i = 0; i < total; i++) {
-    const p = i * 4 + 3;
-    const keepAlpha = Math.round(255 * (1 - blurred[i]));
-    if (keepAlpha < data[p]) data[p] = keepAlpha;
+  // Vertical pass + Alpha application
+  for (let x = 0; x < w; x++) {
+    for (let y = 0; y < h; y++) {
+      let sum = 0;
+      let count = 0;
+      for (let dy = -radius; dy <= radius; dy++) {
+        const ny = y + dy;
+        if (ny >= 0 && ny < h) {
+          sum += tempBlur[ny * w + x];
+          count++;
+        }
+      }
+      const bgFraction = sum / count; // 1 = 100% background, 0 = 100% subject
+      const idx = y * w + x;
+      const p = idx * 4 + 3; // alpha channel
+
+      // Smooth step for clean, anti-aliased edge
+      const keepAlpha = Math.round(255 * Math.max(0, Math.min(1, 1 - bgFraction)));
+      if (keepAlpha < data[p]) {
+        data[p] = keepAlpha;
+      }
+    }
   }
 
   ctx.putImageData(image, 0, 0);
@@ -157,7 +271,10 @@ export function backgroundRemovedCopy(
   return removeBackgroundFlat(copy, tolerance);
 }
 
-/** Border-color uniformity check → drives the "background may be uneven" warning. */
+/**
+ * Checks background uniformity in the upper regions of the photo
+ * (avoids the bottom torso/shoulders to prevent false alarms).
+ */
 export function borderUniformity(source: HTMLCanvasElement): {
   stdDev: number;
   uniform: boolean;
@@ -170,6 +287,7 @@ export function borderUniformity(source: HTMLCanvasElement): {
   let sum = 0;
   let sumSq = 0;
   let n = 0;
+
   const sample = (x: number, y: number) => {
     const i = (y * w + x) * 4;
     const luma = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
@@ -177,16 +295,21 @@ export function borderUniformity(source: HTMLCanvasElement): {
     sumSq += luma * luma;
     n++;
   };
-  const step = Math.max(1, Math.floor(Math.max(w, h) / 200));
+
+  const step = Math.max(1, Math.floor(w / 80));
+  // Sample top edge
   for (let x = 0; x < w; x += step) {
     sample(x, 0);
-    sample(x, h - 1);
   }
-  for (let y = 0; y < h; y += step) {
+
+  // Sample top 30% of left and right edges only (where backdrop is)
+  const maxSideY = Math.floor(h * 0.35);
+  for (let y = 0; y < maxSideY; y += step) {
     sample(0, y);
     sample(w - 1, y);
   }
-  const mean = sum / n;
-  const stdDev = Math.sqrt(Math.max(0, sumSq / n - mean * mean));
-  return { stdDev, uniform: stdDev < 26 };
+
+  const mean = n > 0 ? sum / n : 0;
+  const stdDev = n > 0 ? Math.sqrt(Math.max(0, sumSq / n - mean * mean)) : 0;
+  return { stdDev, uniform: stdDev < 28 };
 }

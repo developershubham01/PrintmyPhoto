@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ import { borderUniformity } from "@/lib/image/bg-removal";
 import { composeFinalPhoto } from "@/lib/image/compose";
 import { useEditorStore } from "@/lib/store/editor-store";
 import { mmToPx } from "@/lib/dimensions";
-import { Eraser, Info, TriangleAlert } from "lucide-react";
+import { Check, Eraser, Info, Sparkles, TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const PRESETS: Array<{ id: string; label: string; color: string }> = [
@@ -32,6 +32,7 @@ export function BackgroundStep() {
   const photoSize = useEditorStore((s) => s.photoSize);
   const [uniformity, setUniformity] = useState<{ stdDev: number; uniform: boolean } | null>(null);
   const [customColor, setCustomColor] = useState(bg.color);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Render a fast preview at 150 DPI whenever relevant state changes (derived, synchronous).
   const previewCanvas = useMemo(() => {
@@ -42,6 +43,20 @@ export function BackgroundStep() {
     const cropped = renderCroppedPhoto(previewBaked, transform, photoSize.widthMm, photoSize.heightMm, dpi);
     return composeFinalPhoto(cropped, bg, w, h);
   }, [previewBaked, transform, bg, photoSize]);
+
+  // Guaranteed reactive repaint whenever previewCanvas changes
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (el && previewCanvas) {
+      el.width = previewCanvas.width;
+      el.height = previewCanvas.height;
+      const ctx = el.getContext("2d");
+      if (ctx) {
+        ctx.clearRect(0, 0, el.width, el.height);
+        ctx.drawImage(previewCanvas, 0, 0);
+      }
+    }
+  }, [previewCanvas]);
 
   const runRemovalAnalysis = () => {
     if (!previewBaked) return;
@@ -61,22 +76,29 @@ export function BackgroundStep() {
     }
   };
 
+  const handleSelectColor = (colorHex: string) => {
+    setBg({ mode: "color", color: colorHex, autoRemove: true });
+    setCustomColor(colorHex);
+  };
+
+  const handleSelectTransparent = () => {
+    setBg({ mode: "transparent", autoRemove: true });
+  };
+
+  const handleSelectOriginal = () => {
+    setBg({ mode: "original", autoRemove: false });
+  };
+
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-10">
       {/* Preview */}
-      <div className="flex flex-col items-center gap-3">
+      <div className="min-w-0 flex flex-col items-center gap-3">
         <div className="checker-bg w-full max-w-[340px] overflow-hidden rounded-xl border shadow-card">
           {previewCanvas ? (
             <canvas
+              ref={canvasRef}
               aria-label="Photo preview with selected background"
               className="block h-auto w-full"
-              ref={(el) => {
-                if (el && previewCanvas) {
-                  el.width = previewCanvas.width;
-                  el.height = previewCanvas.height;
-                  el.getContext("2d")!.drawImage(previewCanvas, 0, 0);
-                }
-              }}
             />
           ) : (
             <div className="flex h-64 items-center justify-center text-sm text-muted-foreground">
@@ -84,21 +106,32 @@ export function BackgroundStep() {
             </div>
           )}
         </div>
-        {bg.mode === "transparent" && (
-          <p className="text-xs text-muted-foreground">
+        {bg.mode === "transparent" ? (
+          <p className="text-xs text-muted-foreground text-center">
             Checkerboard = transparency. Transparency is kept in PNG downloads; PDF and JPG render
-            on white.
+            on white paper.
+          </p>
+        ) : bg.mode === "color" ? (
+          <p className="text-xs text-muted-foreground text-center">
+            Background replaced with{" "}
+            <span className="font-semibold text-foreground">
+              {PRESETS.find((p) => p.color.toLowerCase() === bg.color.toLowerCase())?.label ?? bg.color}
+            </span>
+            .
+          </p>
+        ) : (
+          <p className="text-xs text-muted-foreground text-center">
+            Showing original photo background.
           </p>
         )}
       </div>
 
       {/* Controls */}
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-6">
         <div>
           <h3 className="font-display text-lg font-semibold">Background</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Optional. Most official photos require a plain, light background — always confirm the
-            exact rule with the issuing authority.
+            Choose a replacement background or keep your original. Most official passport photos require a plain, light background.
           </p>
         </div>
 
@@ -106,7 +139,7 @@ export function BackgroundStep() {
           <ModeCard
             active={bg.mode === "original"}
             label="Original"
-            onClick={() => setBg({ mode: "original" })}
+            onClick={handleSelectOriginal}
             swatch={null}
           />
           {PRESETS.map((p) => (
@@ -115,14 +148,7 @@ export function BackgroundStep() {
               active={bg.mode === "color" && bg.color.toLowerCase() === p.color.toLowerCase()}
               label={p.label}
               swatch={p.color}
-              onClick={() => {
-                setBg({ mode: "color", color: p.color });
-                if (!bg.autoRemove) {
-                  toast.info("Turn on “Remove original background” so the new color can show through.", {
-                    duration: 4500,
-                  });
-                }
-              }}
+              onClick={() => handleSelectColor(p.color)}
             />
           ))}
           <ModeCard
@@ -130,28 +156,36 @@ export function BackgroundStep() {
             label="Transparent"
             swatch={null}
             checker
-            onClick={() => setBg({ mode: "transparent" })}
+            onClick={handleSelectTransparent}
           />
         </div>
 
-        <div className="flex flex-wrap items-end gap-3">
+        <div className="flex flex-wrap items-end gap-3 rounded-xl border bg-card/60 p-3.5">
           <div>
-            <Label htmlFor="custom-color" className="mb-1.5 block text-sm font-medium">Custom color</Label>
-            <div className="flex items-center gap-2">
+            <Label htmlFor="custom-color" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Custom color
+            </Label>
+            <div className="flex items-center gap-2.5">
               <Input
                 id="custom-color"
                 type="color"
                 value={customColor}
-                onChange={(e) => setCustomColor(e.target.value)}
-                className="h-11 w-16 cursor-pointer rounded-lg p-1"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setCustomColor(val);
+                  handleSelectColor(val);
+                }}
+                className="h-10 w-14 cursor-pointer rounded-lg p-1"
                 aria-label="Pick a custom background color"
               />
+              <span className="font-mono text-xs text-muted-foreground uppercase">{customColor}</span>
               <Button
                 variant="outline"
-                className="h-11 rounded-xl"
-                onClick={() => setBg({ mode: "color", color: customColor })}
+                size="sm"
+                className="h-10 rounded-xl px-3.5"
+                onClick={() => handleSelectColor(customColor)}
               >
-                Apply color
+                Apply
               </Button>
             </div>
           </div>
@@ -166,8 +200,7 @@ export function BackgroundStep() {
                   Remove original background
                 </Label>
                 <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
-                  Automatic and approximate. Works best on plain, evenly lit backgrounds. Keeps the
-                  process fully on your device.
+                  Automatic AI-free edge detection. Keeps your photo 100% private in your browser.
                 </p>
               </div>
             </div>
@@ -175,7 +208,10 @@ export function BackgroundStep() {
               id="auto-remove"
               checked={bg.autoRemove}
               onCheckedChange={(on) => {
-                setBg({ autoRemove: on });
+                setBg({
+                  autoRemove: on,
+                  mode: on ? (bg.mode === "original" ? "color" : bg.mode) : "original",
+                });
                 if (on) runRemovalAnalysis();
               }}
               aria-label="Toggle automatic background removal"
@@ -185,8 +221,8 @@ export function BackgroundStep() {
           {bg.autoRemove && (
             <div className="mt-4 space-y-3 border-t pt-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="tolerance" className="text-sm">Edge tolerance</Label>
-                <span className="text-xs tabular-nums text-muted-foreground">{bg.tolerance}</span>
+                <Label htmlFor="tolerance" className="text-sm font-medium">Edge sensitivity / tolerance</Label>
+                <span className="text-xs tabular-nums font-semibold text-alma-collard dark:text-alma-kiwi">{bg.tolerance}</span>
               </div>
               <Slider
                 id="tolerance"
@@ -198,8 +234,7 @@ export function BackgroundStep() {
                 aria-label="Background removal tolerance"
               />
               <p className="text-xs text-muted-foreground">
-                Higher removes more (may eat hair edges), lower keeps more (may leave background
-                patches).
+                Slide higher if patches of background remain; slide lower if hair or edge details get eaten.
               </p>
             </div>
           )}
@@ -247,22 +282,31 @@ function ModeCard({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "flex flex-col items-center gap-2 rounded-xl border bg-card p-2.5 text-center transition-all",
+        "flex flex-col items-center gap-2 rounded-xl border bg-card p-2.5 text-center transition-all cursor-pointer",
         active
-          ? "border-alma-collard ring-2 ring-alma-collard/30"
-          : "border-border hover:border-alma-collard/40",
+          ? "border-alma-collard ring-2 ring-alma-collard/40 bg-secondary/30"
+          : "border-border hover:border-alma-collard/40 hover:bg-secondary/20",
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          "h-9 w-full rounded-lg border border-black/10",
+          "h-9 w-full rounded-lg border border-black/10 relative overflow-hidden",
           checker && "checker-bg",
         )}
         style={swatch ? { backgroundColor: swatch } : !swatch && !checker ? { background: "linear-gradient(135deg,#e8e2d2,#d6cdb4)" } : undefined}
-      />
-      <span className="text-xs font-medium">{label}</span>
+      >
+        {active && (
+          <span className="absolute inset-0 flex items-center justify-center bg-black/10">
+            <Check className="h-4 w-4 text-alma-collard dark:text-alma-kiwi drop-shadow" />
+          </span>
+        )}
+      </span>
+      <span className={cn("text-xs", active ? "font-semibold text-alma-collard dark:text-alma-kiwi" : "font-medium")}>
+        {label}
+      </span>
     </button>
   );
 }
+
 

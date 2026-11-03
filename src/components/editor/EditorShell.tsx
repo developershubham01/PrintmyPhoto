@@ -95,51 +95,89 @@ export function EditorShell() {
 
   return (
     <div className="pb-14">
-      {/* Stepper */}
+      {/* Stepper with integrated Quick Tools toolbar */}
       <nav aria-label="Editor steps" className="border-b border-border/70 bg-alma-yogurt/70 dark:bg-card/60">
-        <div className="container-editorial flex items-center gap-1 overflow-x-auto py-2.5 scroll-slim">
-          {STEPS.map((s, i) => {
-            const active = s.id === step;
-            const reachable =
-              i === 0 || (sourceBitmap && (i <= 3 || placements.length > 0 || i <= stepIndex));
-            const done = i < stepIndex;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => reachable && setStep(s.id)}
-                disabled={!reachable}
-                aria-current={active ? "step" : undefined}
-                className={cn(
-                  "flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-[13px] font-medium transition-colors",
-                  active && "bg-secondary text-alma-collard dark:text-alma-kiwi",
-                  !active && reachable && "text-muted-foreground hover:bg-secondary/60",
-                  !reachable && "opacity-40",
-                )}
-              >
-                <span
+        <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-1 overflow-x-auto py-1 scroll-slim">
+            {STEPS.map((s, i) => {
+              const active = s.id === step;
+              const reachable =
+                i === 0 || (sourceBitmap && (i <= 3 || placements.length > 0 || i <= stepIndex));
+              const done = i < stepIndex;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => reachable && setStep(s.id)}
+                  disabled={!reachable}
+                  aria-current={active ? "step" : undefined}
                   className={cn(
-                    "flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold",
-                    active
-                      ? "bg-alma-collard text-alma-yogurt"
-                      : done
-                        ? "bg-alma-kiwi/60 text-alma-collard"
-                        : "bg-secondary/70 text-muted-foreground",
+                    "flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-[13px] font-medium transition-colors cursor-pointer",
+                    active && "bg-secondary text-alma-collard dark:text-alma-kiwi font-semibold shadow-xs",
+                    !active && reachable && "text-muted-foreground hover:bg-secondary/60",
+                    !reachable && "opacity-40 cursor-not-allowed",
                   )}
                 >
-                  {i + 1}
-                </span>
-                <span className="hidden md:inline">{s.label.replace(/^\d+ · /, "")}</span>
-                <span className="md:hidden">{s.short}</span>
-              </button>
-            );
-          })}
+                  <span
+                    className={cn(
+                      "flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold",
+                      active
+                        ? "bg-alma-collard text-alma-yogurt"
+                        : done
+                          ? "bg-alma-kiwi/60 text-alma-collard"
+                          : "bg-secondary/70 text-muted-foreground",
+                    )}
+                  >
+                    {i + 1}
+                  </span>
+                  <span className="hidden md:inline">{s.label.replace(/^\d+ · /, "")}</span>
+                  <span className="md:hidden">{s.short}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick tools: Undo, Redo, Reset */}
+          <div className="hidden shrink-0 items-center gap-2 sm:flex">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8.5 rounded-lg px-2.5 text-xs"
+              onClick={undo}
+              disabled={!canUndo}
+              title="Undo (Ctrl+Z)"
+            >
+              <Undo2 className="mr-1 h-3.5 w-3.5" aria-hidden="true" /> Undo
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8.5 rounded-lg px-2.5 text-xs"
+              onClick={redo}
+              disabled={!canRedo}
+              title="Redo (Ctrl+Y)"
+            >
+              <Redo2 className="mr-1 h-3.5 w-3.5" aria-hidden="true" /> Redo
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8.5 rounded-lg px-2.5 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive"
+              onClick={() => {
+                resetAll();
+                toast.info("Session cleared — all photo data removed from memory.");
+              }}
+              title="Reset session and start over"
+            >
+              Reset
+            </Button>
+          </div>
         </div>
       </nav>
 
       {/* Step content */}
-      <div className="container-editorial grid gap-10 pt-8 lg:grid-cols-[1fr_290px] lg:gap-12">
-        <div className="min-w-0">
+      <div className="mx-auto w-full max-w-[1280px] px-4 pt-8 sm:px-6 lg:px-8">
+        <div className="w-full min-w-0">
           {step === "upload" && <UploadStep />}
           {step === "edit" && <CropperStage />}
           {step === "background" && <BackgroundStep />}
@@ -177,55 +215,10 @@ export function EditorShell() {
             </div>
           )}
         </div>
-
-        {/* Sidebar: tools + privacy + ad */}
-        <aside className="hidden space-y-5 lg:block">
-          <div className="rounded-2xl border bg-card p-4">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
-              Quick tools
-            </p>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <Button variant="outline" size="sm" className="h-10 rounded-lg" onClick={undo} disabled={!canUndo}>
-                <Undo2 className="mr-1.5 h-4 w-4" aria-hidden="true" /> Undo
-              </Button>
-              <Button variant="outline" size="sm" className="h-10 rounded-lg" onClick={redo} disabled={!canRedo}>
-                <Redo2 className="mr-1.5 h-4 w-4" aria-hidden="true" /> Redo
-              </Button>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mt-2 h-10 w-full justify-start rounded-lg text-destructive hover:text-destructive"
-              onClick={() => {
-                resetAll();
-                toast.info("Session cleared — all photo data removed from memory.");
-              }}
-            >
-              Clear session &amp; photo
-            </Button>
-            <p className="mt-2 text-[11.5px] leading-relaxed text-muted-foreground">
-              Shortcuts: Ctrl+Z undo · Ctrl+Y redo · arrows nudge · D duplicate · Del remove
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-alma-collard/25 bg-accent/40 p-4">
-            <p className="flex items-center gap-2 text-sm font-semibold">
-              <ShieldCheck className="h-4.5 w-4.5 text-alma-collard" aria-hidden="true" />
-              Private by design
-            </p>
-            <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
-              Your photos are processed locally in your browser wherever possible. We do not require
-              an account to use this tool. Your photographs are not permanently stored by this
-              website.
-            </p>
-          </div>
-
-          <AdSlot slotId={process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDE} format="rectangle" />
-        </aside>
       </div>
 
       {/* Desktop bottom ad — outside the editing workspace */}
-      <div className="container-editorial mt-12 hidden lg:block">
+      <div className="mx-auto mt-12 hidden max-w-[1280px] px-4 sm:px-6 lg:block lg:px-8">
         <AdSlot slotId={process.env.NEXT_PUBLIC_ADSENSE_SLOT_BOTTOM} format="horizontal" />
       </div>
 

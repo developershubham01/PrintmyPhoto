@@ -44,7 +44,7 @@ export function DisclaimerPage() {
           <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-alma-orange" aria-hidden="true" />
           <p className="text-[15px] leading-relaxed text-foreground">
             <strong className="font-semibold">
-              Passport Photo Print Studio is not a government service and is not affiliated with any
+              printmyphoto is not a government service and is not affiliated with any
               passport office, consulate or issuing authority.
             </strong>{" "}
             Photo requirements vary by country, document type, application channel and time — this

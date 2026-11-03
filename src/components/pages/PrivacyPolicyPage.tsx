@@ -6,7 +6,7 @@ export function PrivacyPolicyPage() {
   return (
     <PageShell
       title="Privacy Policy"
-      lede="How Passport Photo Print Studio handles your photos, your device and your choices — explained in plain language. The short version: your photos never leave your browser."
+      lede="How printmyphoto handles your photos, your device and your choices — explained in plain language. The short version: your photos never leave your browser."
       crumbs={[{ label: "Privacy Policy" }]}
       updated="February 2025"
       showAds={false}
@@ -14,7 +14,7 @@ export function PrivacyPolicyPage() {
       <div className="prose-alma">
         <h2>Overview</h2>
         <p>
-          Passport Photo Print Studio is a free web tool for cropping, adjusting and arranging
+          printmyphoto is a free web tool for cropping, adjusting and arranging
           passport-style photographs for printing. This policy explains what happens to your data
           when you use it. We have deliberately designed the tool so that the most sensitive thing
           you could share with us — your photograph — is never sent anywhere at all.

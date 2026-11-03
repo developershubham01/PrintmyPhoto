@@ -15,12 +15,13 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Free Passport Photo Maker & Print Studio — Create & Print Photos",
-    template: "%s — Passport Photo Print Studio",
+    default: "printmyphoto — Free Passport & ID Photo Maker & Print Studio",
+    template: "%s — printmyphoto",
   },
   description:
-    "Create, customize and print passport-size photographs in minutes. Upload your photo, choose your size, arrange copies on 4×6, A4 or Letter paper and download a print-ready 300 DPI PDF. Free, no sign-up, photos processed in your browser.",
+    "Create, customize and print passport-size photographs in minutes with printmyphoto. Upload your photo, choose your size, arrange copies on 4×6, A4 or Letter paper and download a print-ready 300 DPI PDF. Free, no sign-up, photos processed 100% in your browser.",
   keywords: [
+    "printmyphoto",
     "free passport photo maker online",
     "passport size photo maker",
     "passport photo editor",
@@ -37,17 +38,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: "Free Passport Photo Maker & Print Studio",
+    title: "printmyphoto — Free Passport Photo Maker & Print Studio",
     description:
       "Crop, customize and arrange passport-size photos on printable paper. Download a print-ready 300 DPI PDF — free, no sign-up, processed in your browser.",
     url: SITE.url,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Passport Photo Print Studio" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "printmyphoto" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Passport Photo Maker & Print Studio",
+    title: "printmyphoto — Free Passport Photo Maker & Print Studio",
     description:
-      "Create and print passport-size photos in minutes. Free, no sign-up, browser-side processing.",
+      "Create and print passport-size photos in minutes with printmyphoto. Free, no sign-up, browser-side processing.",
     images: ["/og-image.png"],
   },
   robots: {

@@ -75,7 +75,7 @@ export function PageShell({
           {lede && <p className="mt-4 text-[16.5px] leading-relaxed text-muted-foreground">{lede}</p>}
           {updated && (
             <p className="mt-3 text-[12.5px] text-muted-foreground">
-              Last updated: {updated} · Reviewed by the Passport Photo Studio editorial team
+              Last updated: {updated} · Reviewed by the printmyphoto editorial team
             </p>
           )}
         </header>

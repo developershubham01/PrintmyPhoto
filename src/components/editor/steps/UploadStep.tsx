@@ -80,7 +80,7 @@ export function UploadStep() {
           handleFiles(e.dataTransfer.files);
         }}
         className={cn(
-          "flex min-h-[300px] cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed bg-card p-8 text-center shadow-card transition-all",
+          "min-w-0 flex min-h-[300px] cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed bg-card p-8 text-center shadow-card transition-all",
           dragging
             ? "border-alma-collard bg-accent scale-[1.01]"
             : "border-border hover:border-alma-collard/50",
@@ -142,7 +142,7 @@ export function UploadStep() {
         />
       </div>
 
-      <aside className="space-y-4">
+      <aside className="min-w-0 space-y-4">
         <h2 className="font-display text-lg font-semibold">What makes a good source photo?</h2>
         <ul className="space-y-3 text-sm leading-relaxed text-muted-foreground">
           {[

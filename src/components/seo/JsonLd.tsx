@@ -15,10 +15,10 @@ export function JsonLd({ data }: JsonLdProps) {
 }
 
 export const SITE = {
-  name: "Passport Photo Print Studio",
-  alternateName: "Passport Photo Studio",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://passport-photo-studio.example.com",
-  logo: "/logo.svg",
+  name: "printmyphoto",
+  alternateName: "PrintMyPhoto",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://printmyphoto.com",
+  logo: "/icon.svg",
 };
 
 export function organizationSchema() {

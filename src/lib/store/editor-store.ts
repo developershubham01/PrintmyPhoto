@@ -325,7 +325,24 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   setFaceGuide: (on) => set({ faceGuide: on }),
 
   setBg: (partial) => {
-    set((s) => ({ bg: { ...s.bg, ...partial } }));
+    set((s) => {
+      const nextAutoRemove =
+        partial.autoRemove !== undefined
+          ? partial.autoRemove
+          : partial.mode === "color" || partial.mode === "transparent"
+            ? true
+            : partial.mode === "original"
+              ? false
+              : s.bg.autoRemove;
+
+      return {
+        bg: {
+          ...s.bg,
+          ...partial,
+          autoRemove: nextAutoRemove,
+        },
+      };
+    });
     if (partial.mode || partial.autoRemove === true || partial.color) {
       trackEvent("background_changed", { mode: partial.mode ?? "" });
     }

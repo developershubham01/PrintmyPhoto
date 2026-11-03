@@ -50,8 +50,8 @@ export function ArrangeStep() {
   const stats = sheetStats(placements, photoSize.widthMm, photoSize.heightMm, paperW, paperH);
 
   return (
-    <div className="grid gap-8 xl:grid-cols-[1fr_340px] xl:gap-10">
-      <div className="order-2 space-y-5 xl:order-1">
+    <div className="grid gap-8 lg:grid-cols-[1fr_360px] lg:gap-10">
+      <div className="min-w-0 order-2 space-y-5 lg:order-1">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="font-display text-lg font-semibold">Arrangement</h3>
@@ -76,7 +76,7 @@ export function ArrangeStep() {
       </div>
 
       {/* Controls panel */}
-      <aside className="order-1 space-y-5 xl:order-2">
+      <aside className="min-w-0 order-1 space-y-5 lg:order-2">
         <div className="rounded-2xl border bg-card p-5 shadow-card">
           <p className="flex items-center gap-2 text-sm font-semibold">
             <LayoutGrid className="h-4 w-4 text-alma-collard" aria-hidden="true" />

@@ -54,7 +54,7 @@ export function PaperStep() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-10">
-      <div className="space-y-5">
+      <div className="min-w-0 space-y-5">
         <div>
           <h3 className="font-display text-lg font-semibold">Choose your paper</h3>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -182,7 +182,7 @@ export function PaperStep() {
         </div>
       </div>
 
-      <aside className="space-y-4">
+      <aside className="min-w-0 space-y-4">
         <div className="rounded-2xl border bg-card p-6 shadow-card">
           <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
             Selected paper

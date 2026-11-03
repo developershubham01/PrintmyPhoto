@@ -70,80 +70,80 @@ export interface RouteMeta {
 
 export const ROUTE_META: Record<RouteId, RouteMeta> = {
   home: {
-    title: "Free Passport Photo Maker & Print Studio — Passport Photo Studio",
+    title: "printmyphoto — Free Passport Photo Maker & Print Studio",
     description:
-      "Create, customize and print passport-size photographs in minutes. Crop, change backgrounds, arrange on 4×6, A4 and more, and download a print-ready PDF. Free, no sign-up.",
+      "Create, customize and print passport-size photographs in minutes with printmyphoto. Crop, change backgrounds, arrange on 4×6, A4 and more, and download a print-ready PDF. Free, no sign-up.",
   },
   maker: {
-    title: "Passport Photo Maker — Create & Print Photos Free",
+    title: "Passport Photo Maker — printmyphoto",
     description:
-      "Make passport size photos online for free. Crop to 35×45 mm, 2×2 inch and more, fix the background and download a 300 DPI print-ready sheet.",
+      "Make passport size photos online for free with printmyphoto. Crop to 35×45 mm, 2×2 inch and more, fix the background and download a 300 DPI print-ready sheet.",
   },
   editor: {
-    title: "Photo Editor — Crop, Adjust & Arrange Passport Photos",
+    title: "Photo Editor — printmyphoto",
     description:
       "Crop, rotate and adjust your passport photo, then arrange copies on your paper size and download a print-ready PDF, JPG or PNG at 300 DPI.",
   },
   sizes: {
-    title: "Passport Photo Sizes by Country (mm & inches) — Reference Guide",
+    title: "Passport Photo Sizes by Country (mm & inches) — printmyphoto",
     description:
       "Passport photo sizes for the US, UK, India, Canada, Australia, Schengen and more — exact mm and inch dimensions, pixel sizes at 300 DPI, and links to official sources.",
   },
   country: {
-    title: "Passport Photo Size Guide — Passport Photo Studio",
+    title: "Passport Photo Size Guide — printmyphoto",
     description:
       "Exact passport photo dimensions, background rules and printing tips, with links to the official issuing authority.",
   },
   "printing-guide": {
-    title: "Photo Printing Guide — Print Passport Photos at Home (4×6, A4)",
+    title: "Photo Printing Guide — printmyphoto",
     description:
       "How to print passport photos at home on 4×6 or A4 paper: printer settings, actual-size scaling, 300 DPI, paper choices and a size calculator.",
   },
   "how-it-works": {
-    title: "How It Works — 4 Steps to a Print-Ready Passport Photo",
+    title: "How It Works — printmyphoto",
     description:
       "See how the free passport photo maker works: upload, crop, customize the background, arrange on paper and download. Everything runs in your browser.",
   },
   about: {
-    title: "About — Passport Photo Studio",
+    title: "About — printmyphoto",
     description:
       "Who we are: a free, privacy-first passport photo and printing tool that processes everything in your browser.",
   },
   contact: {
-    title: "Contact — Passport Photo Studio",
-    description: "Get in touch with the Passport Photo Studio team — feedback, bugs and partnership enquiries.",
+    title: "Contact — printmyphoto",
+    description: "Get in touch with the printmyphoto team — feedback, bugs and partnership enquiries.",
   },
   "privacy-policy": {
-    title: "Privacy Policy — Passport Photo Studio",
+    title: "Privacy Policy — printmyphoto",
     description:
-      "How the passport photo maker handles your photos (in your browser), cookies, analytics and advertising.",
+      "How printmyphoto handles your photos (in your browser), cookies, analytics and advertising.",
   },
   terms: {
-    title: "Terms and Conditions — Passport Photo Studio",
-    description: "The terms that apply when you use the free passport photo maker and print studio.",
+    title: "Terms and Conditions — printmyphoto",
+    description: "The terms that apply when you use printmyphoto free passport photo maker and print studio.",
   },
   disclaimer: {
-    title: "Disclaimer — Passport Photo Studio",
+    title: "Disclaimer — printmyphoto",
     description:
       "Important disclaimer: photo requirements vary by authority. This tool does not guarantee compliance with any official document standard.",
   },
   "cookie-policy": {
-    title: "Cookie Policy — Passport Photo Studio",
-    description: "What cookies and local storage the passport photo maker uses and how to control them.",
+    title: "Cookie Policy — printmyphoto",
+    description: "What cookies and local storage printmyphoto uses and how to control them.",
   },
   faq: {
-    title: "FAQ — Passport Photo Questions, Answered",
+    title: "FAQ — printmyphoto",
     description:
       "Answers to common passport photo questions: sizes, how many photos fit on 4×6 or A4, background rules, printing at home and privacy.",
   },
   blog: {
-    title: "Blog — Passport Photo Guides & Printing Tips",
+    title: "Blog — printmyphoto",
     description:
       "Original guides on making, editing and printing passport photos: country sizes, 4×6 and A4 layouts, backgrounds and common mistakes.",
   },
   "blog-article": {
-    title: "Blog — Passport Photo Studio",
-    description: "Passport photo guides and printing tips.",
+    title: "Blog Guide — printmyphoto",
+    description: "Passport photo guides and printing tips from printmyphoto.",
   },
 };
 

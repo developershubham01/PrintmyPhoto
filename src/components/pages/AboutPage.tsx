@@ -66,7 +66,7 @@ export function AboutPage() {
   return (
     <PageShell
       title="A photo studio that never sees your photos"
-      lede="Passport Photo Print Studio is a free, privacy-first web tool for making and printing passport-style photos — built on a simple idea: the safest place for your photograph is your own device."
+      lede="printmyphoto is a free, privacy-first web tool for making and printing passport-style photos — built on a simple idea: the safest place for your photograph is your own device."
       crumbs={[{ label: "About" }]}
       updated="February 2025"
       kicker="About us"
@@ -76,7 +76,7 @@ export function AboutPage() {
         <p>
           Getting a passport photo used to mean paying a shop for a sheet of prints, or handing
           your face to an app that uploads it to unknown servers. It should be simpler than that.
-          We built Passport Photo Print Studio to make honest, private photo printing available to
+          We built printmyphoto to make honest, private photo printing available to
           everyone: pick a photo, crop it to the exact size you need, tidy the background, arrange
           a print sheet and download it — free, in about a minute, without an account and without
           your images ever leaving your browser.
@@ -204,7 +204,7 @@ export function AboutPage() {
       <div className="prose-alma flex items-start gap-3 text-[13.5px] text-muted-foreground">
         <PenLine className="mt-1 h-4 w-4 shrink-0" aria-hidden="true" />
         <p>
-          This page is maintained by the editorial team of Passport Photo Print Studio and was last
+          This page is maintained by the editorial team of printmyphoto and was last
           reviewed in February 2025.
         </p>
       </div>

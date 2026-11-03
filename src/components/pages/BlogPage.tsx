@@ -69,7 +69,7 @@ export function BlogPage() {
       title="Blog & Guides"
       lede="Original, practical guides on making, editing and printing passport photos — country sizes, 4×6 and A4 sheet layouts, background rules and the mistakes that get photos rejected. Written by the studio team, updated regularly."
       crumbs={[{ label: "Home", href: "/" }, { label: "Blog" }]}
-      kicker="Passport Photo Studio"
+      kicker="printmyphoto"
     >
       <section aria-label="Filter guides by topic">
         <div role="group" aria-label="Filter guides by topic" className="flex flex-wrap gap-2">
@@ -81,11 +81,10 @@ export function BlogPage() {
                 type="button"
                 onClick={() => setActiveTag(tag)}
                 aria-pressed={selected}
-                className={`inline-flex min-h-[44px] items-center rounded-full border px-4 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-alma-accent/60 ${
-                  selected
+                className={`inline-flex min-h-[44px] items-center rounded-full border px-4 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-alma-accent/60 ${selected
                     ? "border-transparent bg-alma-collard text-alma-yogurt shadow-card"
                     : "border-border bg-card text-foreground/80 hover:border-alma-collard/40 hover:text-foreground"
-                }`}
+                  }`}
               >
                 {tag}
               </button>

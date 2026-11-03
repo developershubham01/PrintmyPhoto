@@ -137,7 +137,7 @@ export function DownloadStep() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-10">
-      <div className="space-y-4">
+      <div className="min-w-0 space-y-4">
         <div>
           <h3 className="font-display text-xl font-semibold">Download &amp; print</h3>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -205,7 +205,7 @@ export function DownloadStep() {
         </Button>
       </div>
 
-      <aside className="space-y-4">
+      <aside className="min-w-0 space-y-4">
         <div className="rounded-2xl border bg-card p-5 shadow-card">
           <p className="font-display text-lg font-semibold">Printing checklist</p>
           <ol className="mt-3 space-y-2.5 text-[13.5px] leading-relaxed text-muted-foreground">

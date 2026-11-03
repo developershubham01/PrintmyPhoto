@@ -6,7 +6,7 @@ export function TermsPage() {
   return (
     <PageShell
       title="Terms and Conditions"
-      lede="The ground rules for using Passport Photo Print Studio — a free browser tool for making and printing passport-style photos. Written to be read, not to hide surprises."
+      lede="The ground rules for using printmyphoto — a free browser tool for making and printing passport-style photos. Written to be read, not to hide surprises."
       crumbs={[{ label: "Terms and Conditions" }]}
       updated="February 2025"
       showAds={false}
@@ -14,7 +14,7 @@ export function TermsPage() {
       <div className="prose-alma">
         <h2>Acceptance of these terms</h2>
         <p>
-          By accessing or using Passport Photo Print Studio (the &quot;site&quot; or the
+          By accessing or using printmyphoto (the &quot;site&quot; or the
           &quot;tool&quot;), you agree to these Terms and Conditions. If you do not agree with any
           part of them, please do not use the site. These terms apply to every visitor, whether you
           make one photo or a hundred, and they apply from the moment you first load the page.
@@ -137,7 +137,7 @@ export function TermsPage() {
         <h2>Contact</h2>
         <p>
           Questions about these terms? Get in touch through the <a href="#/contact">contact
-          page</a> — the form composes an email in your own mail application, so nothing is
+            page</a> — the form composes an email in your own mail application, so nothing is
           transmitted by the website itself.
         </p>
       </div>
