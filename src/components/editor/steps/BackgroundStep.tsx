@@ -282,7 +282,7 @@ function ModeCard({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "flex flex-col items-center gap-2 rounded-xl border bg-card p-2.5 text-center transition-all cursor-pointer",
+        "flex flex-col items-center gap-1.5 sm:gap-2 rounded-xl border bg-card p-2 sm:p-2.5 text-center transition-all cursor-pointer min-w-0 w-full",
         active
           ? "border-alma-collard ring-2 ring-alma-collard/40 bg-secondary/30"
           : "border-border hover:border-alma-collard/40 hover:bg-secondary/20",
@@ -291,18 +291,18 @@ function ModeCard({
       <span
         aria-hidden="true"
         className={cn(
-          "h-9 w-full rounded-lg border border-black/10 relative overflow-hidden",
+          "h-8 sm:h-9 w-full rounded-lg border border-black/10 relative overflow-hidden",
           checker && "checker-bg",
         )}
         style={swatch ? { backgroundColor: swatch } : !swatch && !checker ? { background: "linear-gradient(135deg,#e8e2d2,#d6cdb4)" } : undefined}
       >
         {active && (
           <span className="absolute inset-0 flex items-center justify-center bg-black/10">
-            <Check className="h-4 w-4 text-alma-collard dark:text-alma-kiwi drop-shadow" />
+            <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-alma-collard dark:text-alma-kiwi drop-shadow" />
           </span>
         )}
       </span>
-      <span className={cn("text-xs", active ? "font-semibold text-alma-collard dark:text-alma-kiwi" : "font-medium")}>
+      <span className={cn("text-[11px] sm:text-xs truncate max-w-full", active ? "font-semibold text-alma-collard dark:text-alma-kiwi" : "font-medium")}>
         {label}
       </span>
     </button>

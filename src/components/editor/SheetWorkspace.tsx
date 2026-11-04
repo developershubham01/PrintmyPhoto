@@ -281,8 +281,8 @@ export function SheetWorkspace({ mode, zoom }: SheetWorkspaceProps) {
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
           className={cn(
-            "block rounded-sm shadow-card",
-            mode === "arrange" ? "cursor-grab active:cursor-grabbing" : "cursor-default",
+            "block rounded-sm shadow-card select-none",
+            mode === "arrange" ? "cursor-grab active:cursor-grabbing touch-none" : "cursor-default",
           )}
           style={{
             width: paperW * pxPerMm,

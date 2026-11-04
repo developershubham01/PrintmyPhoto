@@ -76,6 +76,10 @@
 :root {
   --radius: 0.9375rem;
 
+  /* Font Families matching Alma Design System */
+  --font-sans-body: "Archivo Variable", "Archivo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+
   /* Alma light — warm off-whites, deep teriyaki ink, collard primary */
   --background: #f7f5ed;
   --foreground: #33140c;

@@ -97,8 +97,43 @@ export function EditorShell() {
     <div className="pb-14">
       {/* Stepper with integrated Quick Tools toolbar */}
       <nav aria-label="Editor steps" className="border-b border-border/70 bg-alma-yogurt/70 dark:bg-card/60">
-        <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-1 overflow-x-auto py-1 scroll-slim">
+        {/* Mobile top summary & quick tools (< 640px) */}
+        <div className="flex items-center justify-between border-b border-border/40 px-4 py-2 sm:hidden">
+          <div className="flex items-center gap-2">
+            <span className="flex h-5.5 w-5.5 items-center justify-center rounded-full bg-alma-collard text-[11px] font-bold text-alma-yogurt dark:bg-alma-kiwi dark:text-alma-collard">
+              {stepIndex + 1}
+            </span>
+            <span className="text-xs font-semibold text-foreground">
+              {STEPS[stepIndex]?.short}
+            </span>
+            <span className="text-[11px] text-muted-foreground">({stepIndex + 1} of {STEPS.length})</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-7 w-7 rounded-lg text-xs"
+              onClick={undo}
+              disabled={!canUndo}
+              aria-label="Undo"
+            >
+              <Undo2 className="h-3.5 w-3.5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-7 w-7 rounded-lg text-xs"
+              onClick={redo}
+              disabled={!canRedo}
+              aria-label="Redo"
+            >
+              <Redo2 className="h-3.5 w-3.5" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-4 px-3 py-1.5 sm:px-6 sm:py-2 lg:px-8">
+          <div className="flex items-center gap-1 overflow-x-auto py-1 scroll-slim w-full sm:w-auto">
             {STEPS.map((s, i) => {
               const active = s.id === step;
               const reachable =
@@ -112,7 +147,7 @@ export function EditorShell() {
                   disabled={!reachable}
                   aria-current={active ? "step" : undefined}
                   className={cn(
-                    "flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-[13px] font-medium transition-colors cursor-pointer",
+                    "flex shrink-0 items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 py-1.5 sm:px-3 sm:py-2 text-[12.5px] sm:text-[13px] font-medium transition-colors cursor-pointer",
                     active && "bg-secondary text-alma-collard dark:text-alma-kiwi font-semibold shadow-xs",
                     !active && reachable && "text-muted-foreground hover:bg-secondary/60",
                     !reachable && "opacity-40 cursor-not-allowed",
@@ -120,9 +155,9 @@ export function EditorShell() {
                 >
                   <span
                     className={cn(
-                      "flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold",
+                      "flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full text-[10px] sm:text-[11px] font-bold",
                       active
-                        ? "bg-alma-collard text-alma-yogurt"
+                        ? "bg-alma-collard text-alma-yogurt dark:bg-alma-kiwi dark:text-alma-collard"
                         : done
                           ? "bg-alma-kiwi/60 text-alma-collard"
                           : "bg-secondary/70 text-muted-foreground",
@@ -252,14 +287,14 @@ export function MakerPage({ mode }: { mode: "maker" | "editor" }) {
     <div>
       {mode === "maker" ? (
         <section className="hero-wash dot-grid border-b border-border/70">
-          <div className="container-editorial py-10 text-center md:py-14">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-alma-accent">
+          <div className="container-editorial py-6 text-center sm:py-10 md:py-12">
+            <p className="text-[11.5px] sm:text-[12px] font-semibold uppercase tracking-[0.2em] text-alma-accent">
               Free · No sign-up · 300 DPI
             </p>
-            <h1 className="mx-auto mt-3 max-w-2xl text-balance font-display text-4xl font-semibold leading-[1.06] md:text-5xl">
+            <h1 className="mx-auto mt-2.5 max-w-2xl text-balance font-display text-3xl sm:text-4xl font-semibold leading-[1.06] md:text-5xl">
               Passport Photo Maker
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-[16px] leading-relaxed text-muted-foreground">
+            <p className="mx-auto mt-3 max-w-xl text-[14.5px] sm:text-[16px] leading-relaxed text-muted-foreground">
               Upload a photo, crop it to your country&apos;s size, fix the background, and download
               a print-ready sheet. Everything runs in your browser — your photo never leaves your
               device.

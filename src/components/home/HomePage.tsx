@@ -71,32 +71,32 @@ export function HomePage() {
 function Hero() {
   return (
     <section className="hero-wash relative overflow-hidden border-b border-border/70">
-      <div className="container-editorial grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="container-editorial grid items-center gap-10 py-10 sm:py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 rounded-full border bg-card/80 px-4 py-2 text-[12.5px] font-semibold text-alma-collard shadow-card"
+            className="inline-flex items-center gap-2 rounded-full border bg-card/80 px-3.5 py-1.5 text-[12px] font-semibold text-alma-collard dark:text-alma-kiwi shadow-card"
           >
-            <Sparkles className="h-4 w-4 text-alma-orange" aria-hidden="true" />
+            <Sparkles className="h-3.5 w-3.5 text-alma-orange" aria-hidden="true" />
             Free forever · No sign-up · Photos never leave your browser
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.06 }}
-            className="mt-6 text-balance font-display text-[clamp(2.6rem,6vw,4.3rem)] font-semibold leading-[1.02]"
+            className="mt-5 text-balance font-display text-[clamp(2.3rem,5.5vw,4.1rem)] font-semibold leading-[1.03]"
           >
             Your Perfect Passport Photo,{" "}
-            <span className="relative whitespace-nowrap text-alma-collard">
+            <span className="relative whitespace-nowrap text-alma-collard dark:text-alma-kiwi">
               Ready to Print.
               <svg
                 aria-hidden="true"
                 viewBox="0 0 220 12"
-                className="absolute -bottom-2 left-0 w-full text-alma-support"
+                className="absolute -bottom-2 left-0 w-full text-alma-support opacity-90"
                 preserveAspectRatio="none"
               >
-                <path d="M2 9C60 3 160 3 218 8" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round" />
+                <path d="M2 9C60 3 160 3 218 8" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" />
               </svg>
             </span>
           </motion.h1>
@@ -104,7 +104,7 @@ function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12 }}
-            className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted-foreground"
+            className="mt-5 max-w-xl text-[16px] sm:text-[17px] leading-relaxed text-muted-foreground"
           >
             Create, customize and print passport-size photographs in minutes. Upload your photo,
             choose your size and download a print-ready sheet — arranged automatically on 4×6, A4,
@@ -114,10 +114,10 @@ function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.18 }}
-            className="mt-8 flex flex-wrap gap-3"
+            className="mt-7 flex flex-wrap gap-3"
           >
             <Button
-              className="btn-gradient h-13 rounded-xl px-7 text-[15.5px] font-semibold"
+              className="btn-gradient h-12 sm:h-13 rounded-xl px-6 sm:px-7 text-[15px] sm:text-[15.5px] font-semibold"
               onClick={() => (window.location.hash = "#/passport-photo-maker")}
             >
               Create Your Photo
@@ -125,22 +125,22 @@ function Hero() {
             </Button>
             <Button
               variant="secondary"
-              className="h-13 rounded-xl px-7 text-[15.5px] font-semibold"
+              className="h-12 sm:h-13 rounded-xl px-6 sm:px-7 text-[15px] sm:text-[15.5px] font-semibold"
               onClick={() => (window.location.hash = "#/passport-photo-sizes")}
             >
               Explore Photo Sizes
             </Button>
           </motion.div>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-muted-foreground">
+          <div className="mt-8 grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-2 text-[12.5px] sm:text-[13px] text-muted-foreground">
             {[
-              { icon: <ShieldCheck className="h-4 w-4 text-alma-collard" aria-hidden="true" />, text: "Browser-side processing" },
-              { icon: <Zap className="h-4 w-4 text-alma-orange" aria-hidden="true" />, text: "300 DPI print-ready PDF" },
-              { icon: <Landmark className="h-4 w-4 text-alma-accent" aria-hidden="true" />, text: "35+ country size presets" },
-              { icon: <Smartphone className="h-4 w-4 text-alma-teal" aria-hidden="true" />, text: "Works on mobile" },
+              { icon: <ShieldCheck className="h-4 w-4 text-alma-collard dark:text-alma-kiwi shrink-0" aria-hidden="true" />, text: "Browser-side processing" },
+              { icon: <Zap className="h-4 w-4 text-alma-orange shrink-0" aria-hidden="true" />, text: "300 DPI print-ready PDF" },
+              { icon: <Landmark className="h-4 w-4 text-alma-accent shrink-0" aria-hidden="true" />, text: "35+ country size presets" },
+              { icon: <Smartphone className="h-4 w-4 text-alma-teal shrink-0" aria-hidden="true" />, text: "Works on mobile" },
             ].map((t) => (
               <span key={t.text} className="inline-flex items-center gap-1.5">
                 {t.icon}
-                {t.text}
+                <span>{t.text}</span>
               </span>
             ))}
           </div>
@@ -159,101 +159,113 @@ function HeroMockup() {
       initial={{ opacity: 0, scale: 0.96, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ delay: 0.15, duration: 0.55, ease: "easeOut" }}
-      className="relative mx-auto w-full max-w-[460px]"
+      className="relative mx-auto w-full max-w-[460px] px-2 sm:px-0"
       aria-hidden="true"
     >
-      {/* Organic blobs */}
-      <div className="absolute -left-10 -top-10 h-44 w-44 rounded-full bg-alma-kiwi/40 blur-3xl" />
-      <div className="absolute -bottom-8 -right-6 h-52 w-52 rounded-full bg-alma-orange/30 blur-3xl" />
-      <div className="absolute right-10 top-24 h-28 w-28 rounded-full bg-alma-teal/25 blur-2xl" />
+      {/* Soft atmospheric ambient glow */}
+      <div className="absolute -left-6 -top-6 h-36 w-36 rounded-full bg-alma-kiwi/30 blur-3xl" />
+      <div className="absolute -bottom-6 -right-4 h-40 w-40 rounded-full bg-alma-orange/20 blur-3xl" />
+      <div className="absolute right-6 top-16 h-24 w-24 rounded-full bg-alma-teal/20 blur-2xl" />
 
       {/* Editor card */}
-      <div className="relative rounded-[32px] border bg-card/95 p-5 shadow-lift backdrop-blur">
+      <div className="relative rounded-[28px] sm:rounded-[32px] border bg-card/95 p-4 sm:p-5 shadow-lift backdrop-blur">
         <div className="flex items-center justify-between border-b border-border/70 pb-3">
           <div className="flex gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-alma-orange/80" />
             <span className="h-2.5 w-2.5 rounded-full bg-alma-support/90" />
             <span className="h-2.5 w-2.5 rounded-full bg-alma-teal/70" />
           </div>
-          <span className="rounded-md bg-secondary px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider text-alma-collard">
-            Step 2 · Crop
+          <span className="rounded-md bg-secondary px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider text-alma-collard dark:text-alma-kiwi">
+            Step 2 · Crop &amp; Biometric Guide
           </span>
         </div>
-        <div className="mt-4 flex justify-center gap-4">
-          {/* Photo frame with guide lines */}
+        <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Photo frame with official biometric guidelines */}
           <div
-            className="relative w-[150px] overflow-hidden rounded-xl border-2 border-alma-collard/70 shadow-card"
+            className="relative w-[150px] overflow-hidden rounded-xl border-2 border-alma-collard/70 dark:border-alma-kiwi/70 shadow-card transition-colors duration-200"
             style={{ aspectRatio: "35/45", backgroundColor: bg }}
           >
             <SamplePortrait />
-            <svg viewBox="0 0 100 130" className="absolute inset-0 h-full w-full">
-              <line x1="0" y1="44" x2="100" y2="44" stroke="rgba(195,214,56,0.95)" strokeWidth="1" strokeDasharray="5 3" />
-              <ellipse cx="50" cy="46" rx="24" ry="32" fill="none" stroke="rgba(20,108,132,0.8)" strokeWidth="1" strokeDasharray="6 4" />
+            <svg viewBox="0 0 100 130" className="absolute inset-0 h-full w-full pointer-events-none">
+              <line x1="0" y1="46" x2="100" y2="46" stroke="rgba(195,214,56,0.95)" strokeWidth="1" strokeDasharray="5 3" />
+              <line x1="50" y1="0" x2="50" y2="130" stroke="rgba(20,108,132,0.4)" strokeWidth="0.75" strokeDasharray="4 3" />
+              <ellipse cx="50" cy="50" rx="26" ry="34" fill="none" stroke="rgba(20,108,132,0.8)" strokeWidth="1" strokeDasharray="6 4" />
             </svg>
           </div>
-          <div className="flex flex-col justify-between py-1">
+          <div className="flex flex-col justify-between py-1 w-full sm:w-auto">
             <div className="space-y-2">
-              {["Zoom 118%", "Brightness +6", "Contrast +3"].map((row) => (
-                <div key={row} className="flex items-center gap-2">
-                  <span className="h-1.5 w-16 rounded-full bg-secondary" />
-                  <span className="text-[10px] font-medium text-muted-foreground">{row}</span>
+              {[
+                { label: "Zoom 115%", pct: "75%" },
+                { label: "Brightness +5%", pct: "55%" },
+                { label: "Contrast +3%", pct: "53%" },
+              ].map((row) => (
+                <div key={row.label} className="flex items-center gap-2">
+                  <div className="h-1.5 w-20 rounded-full bg-secondary overflow-hidden">
+                    <div className="h-full bg-alma-collard dark:bg-alma-kiwi rounded-full" style={{ width: row.pct }} />
+                  </div>
+                  <span className="text-[10.5px] font-medium text-muted-foreground">{row.label}</span>
                 </div>
               ))}
             </div>
-            <div className="flex gap-1.5">
-              {BG_COLORS.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  aria-label={`Background ${c}`}
-                  onClick={() => setBg(c)}
-                  className={cn(
-                    "h-6 w-6 rounded-full border border-black/15 transition-transform hover:scale-110",
-                    bg === c && "ring-2 ring-alma-collard ring-offset-2 ring-offset-card",
-                  )}
-                  style={{ backgroundColor: c }}
-                />
-              ))}
+            <div className="mt-3 sm:mt-0">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
+                Background
+              </p>
+              <div className="flex gap-1.5">
+                {BG_COLORS.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    aria-label={`Background ${c}`}
+                    onClick={() => setBg(c)}
+                    className={cn(
+                      "h-6 w-6 rounded-full border border-black/15 transition-transform hover:scale-110 cursor-pointer",
+                      bg === c && "ring-2 ring-alma-collard dark:ring-alma-kiwi ring-offset-2 ring-offset-card",
+                    )}
+                    style={{ backgroundColor: c }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
-        <div className="mt-4 flex items-center justify-between rounded-xl bg-secondary/60 px-4 py-2.5">
-          <span className="text-[11.5px] font-semibold text-alma-collard">35 × 45 mm · 300 DPI</span>
-          <span className="text-[11px] text-muted-foreground">413 × 531 px</span>
+        <div className="mt-4 flex items-center justify-between rounded-xl bg-secondary/60 px-3.5 py-2 sm:px-4 sm:py-2.5">
+          <span className="text-[11.5px] font-semibold text-alma-collard dark:text-alma-kiwi">35 × 45 mm · 300 DPI</span>
+          <span className="text-[11px] text-muted-foreground font-mono">413 × 531 px</span>
         </div>
       </div>
 
       {/* Floating: paper selector */}
       <motion.div
-        animate={{ y: [0, -10, 0] }}
+        animate={{ y: [0, -8, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-6 top-8 hidden rounded-2xl border bg-card/95 p-3.5 shadow-lift backdrop-blur sm:block md:-left-12"
+        className="absolute -left-2 sm:-left-4 md:-left-6 top-8 hidden rounded-2xl border bg-card/95 p-3 shadow-lift backdrop-blur sm:block"
       >
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Paper</p>
-        <div className="mt-2 flex items-center gap-2">
-          <span className="rounded-lg bg-alma-collard px-2.5 py-1 text-[11px] font-bold text-alma-yogurt">4×6 in</span>
-          <span className="rounded-lg border px-2.5 py-1 text-[11px] font-medium">A4</span>
-          <span className="rounded-lg border px-2.5 py-1 text-[11px] font-medium">Letter</span>
+        <p className="text-[9.5px] font-semibold uppercase tracking-wider text-muted-foreground">Paper format</p>
+        <div className="mt-1.5 flex items-center gap-1.5">
+          <span className="rounded-md bg-alma-collard dark:bg-alma-kiwi px-2.5 py-1 text-[11px] font-bold text-alma-yogurt dark:text-alma-collard">4×6 in</span>
+          <span className="rounded-md border px-2 py-1 text-[11px] font-medium">A4</span>
+          <span className="rounded-md border px-2 py-1 text-[11px] font-medium">Letter</span>
         </div>
       </motion.div>
 
-      {/* Floating: PDF preview */}
+      {/* Floating: PDF preview badge */}
       <motion.div
-        animate={{ y: [0, 10, 0] }}
+        animate={{ y: [0, 8, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-        className="absolute -bottom-8 -right-3 hidden rounded-2xl border bg-card/95 p-3.5 shadow-lift backdrop-blur sm:block md:-right-8"
+        className="absolute -bottom-6 -right-2 sm:-right-4 md:-right-6 hidden rounded-2xl border bg-card/95 p-3 shadow-lift backdrop-blur sm:block"
       >
-        <div className="flex items-center gap-3">
-          <div className="grid grid-cols-3 gap-[3px] rounded-md border border-border bg-white p-1.5">
+        <div className="flex items-center gap-2.5">
+          <div className="grid grid-cols-3 gap-1 rounded-md border border-border bg-white dark:bg-muted p-1">
             {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i} className="h-3 w-2.5 rounded-[2px]" style={{ backgroundColor: bg }} />
+              <span key={i} className="h-3 w-2.5 rounded-[1px] border border-black/10" style={{ backgroundColor: bg }} />
             ))}
           </div>
           <div>
-            <p className="flex items-center gap-1.5 text-[12px] font-bold text-alma-collard">
-              <BadgeCheck className="h-4 w-4" /> 6 photos
+            <p className="flex items-center gap-1 text-[12px] font-bold text-alma-collard dark:text-alma-kiwi">
+              <BadgeCheck className="h-3.5 w-3.5" /> 6 photos
             </p>
-            <p className="text-[10.5px] text-muted-foreground">print-ready PDF</p>
+            <p className="text-[10px] text-muted-foreground">Print-ready PDF</p>
           </div>
         </div>
       </motion.div>
@@ -261,21 +273,68 @@ function HeroMockup() {
   );
 }
 
-/** Small SVG portrait used in the hero mockup (illustrative, not a real photo). */
+/** Elegant passport portrait illustration with studio lighting and natural silhouette. */
 function SamplePortrait() {
   return (
-    <svg viewBox="0 0 100 130" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-      <rect width="100" height="130" fill="transparent" />
-      <path d="M50 96 C28 96 16 112 14 130 L86 130 C84 112 72 96 50 96Z" fill="#4a6a68" />
-      <path d="M50 100 L41 122 L50 130 L59 122 Z" fill="#f4efe1" />
-      <rect x="43" y="82" width="14" height="18" rx="6" fill="#c9987a" />
-      <ellipse cx="50" cy="62" rx="20" ry="23" fill="#d8a988" />
-      <path d="M30 58 C30 40 42 32 50 32 C58 32 70 40 70 58 C70 46 60 40 50 40 C40 40 30 46 30 58Z" fill="#3f3129" />
-      <ellipse cx="43" cy="62" rx="2.4" ry="1.6" fill="#2e2620" />
-      <ellipse cx="57" cy="62" rx="2.4" ry="1.6" fill="#2e2620" />
-      <path d="M38 55 L48 53.5 M52 53.5 L62 55" stroke="#3f3129" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M50 66 C52 68 52 70 49 71" stroke="rgba(120,80,60,0.7)" strokeWidth="1.1" fill="none" />
-      <path d="M44 77 C48 79.5 52 79.5 56 77" stroke="rgba(120,80,60,0.8)" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+    <svg viewBox="0 0 100 130" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#2c3a44" />
+          <stop offset="100%" stopColor="#1a242c" />
+        </linearGradient>
+        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#eed5c4" />
+          <stop offset="100%" stopColor="#e2c0aa" />
+        </linearGradient>
+        <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#30241b" />
+          <stop offset="100%" stopColor="#1c140e" />
+        </linearGradient>
+      </defs>
+
+      {/* Suit jacket shoulders */}
+      <path
+        d="M6 130 C12 108 28 98 44 96 L50 106 L56 96 C72 98 88 108 94 130 Z"
+        fill="url(#suitGrad)"
+      />
+      {/* Crisp shirt collar & lapels */}
+      <path d="M44 96 L50 114 L56 96 L50 104 Z" fill="#ffffff" />
+      <path d="M49 104 L50 126 L51 104 Z" fill="#146c84" />
+      <path d="M38 98 L46 116 L43 118 L34 102 Z" fill="#243038" />
+      <path d="M62 98 L54 116 L57 118 L66 102 Z" fill="#243038" />
+
+      {/* Neck */}
+      <rect x="43" y="78" width="14" height="20" rx="4" fill="url(#skinGrad)" />
+      <path d="M43 88 C47 92 53 92 57 88 Z" fill="rgba(0,0,0,0.06)" />
+
+      {/* Head and ears */}
+      <ellipse cx="28" cy="54" rx="3.5" ry="6.5" fill="#e2c0aa" />
+      <ellipse cx="72" cy="54" rx="3.5" ry="6.5" fill="#e2c0aa" />
+      <ellipse cx="50" cy="52" rx="22" ry="27" fill="url(#skinGrad)" />
+
+      {/* Clean hairline & styled hair */}
+      <path
+        d="M27 48 C27 28 36 20 50 20 C64 20 73 28 73 48 C73 34 64 27 50 27 C36 27 27 34 27 48 Z"
+        fill="url(#hairGrad)"
+      />
+      <path
+        d="M26 44 C26 24 38 18 50 18 C62 18 74 24 74 44 C72 30 62 23 50 23 C38 23 28 30 26 44 Z"
+        fill="url(#hairGrad)"
+      />
+
+      {/* Subtle refined facial features */}
+      {/* Eyebrows */}
+      <path d="M36 43 Q42 41 46 43" stroke="#241a12" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+      <path d="M54 43 Q58 41 64 43" stroke="#241a12" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+      {/* Eyes */}
+      <ellipse cx="41" cy="48" rx="2.8" ry="1.8" fill="#241a12" />
+      <ellipse cx="59" cy="48" rx="2.8" ry="1.8" fill="#241a12" />
+      <circle cx="41.8" cy="47.5" r="0.6" fill="#ffffff" />
+      <circle cx="59.8" cy="47.5" r="0.6" fill="#ffffff" />
+      {/* Nose bridge & tip */}
+      <path d="M50 47 L49 57 Q50 59 52 57" stroke="#caa28b" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+      {/* Neutral mouth (passport requirement: neutral expression) */}
+      <path d="M44 67 Q50 68 56 67" stroke="#a86858" strokeWidth="1.6" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
