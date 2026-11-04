@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { CookieConsent } from "@/components/consent/CookieConsent";
 import { useHashRoute } from "@/lib/router";
 import { HomePage } from "@/components/home/HomePage";
@@ -33,6 +34,11 @@ export function AppShell() {
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
   }, []);
+
+  // Smooth scroll to top whenever the route or parameter changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [route, param]);
 
   const view = (() => {
     switch (route) {
@@ -93,6 +99,7 @@ export function AppShell() {
         </AnimatePresence>
       </main>
       <Footer />
+      <ScrollToTop />
       <CookieConsent />
     </div>
   );

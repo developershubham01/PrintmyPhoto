@@ -31,7 +31,7 @@ export function Logo({ className }: { className?: string }) {
       </span>
       <span className="leading-tight">
         <span className="block font-display text-[20px] font-bold tracking-tight text-foreground">
-          print<span className="text-alma-collard dark:text-alma-kiwi">my</span>photo
+          Print<span className="text-alma-collard dark:text-alma-kiwi">my</span>Photo
         </span>
         <span className="block font-sans text-[9px] font-semibold uppercase tracking-[0.22em] text-muted-foreground/90">
           Photo &amp; Print Studio
