@@ -20,7 +20,6 @@ import {
   Printer,
   Ruler,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
@@ -117,7 +116,7 @@ export function Navbar() {
             className="btn-gradient hidden h-10 rounded-xl px-4 text-[13.5px] font-semibold sm:inline-flex xl:h-10.5 xl:px-5 xl:text-[14px]"
             onClick={() => go("/passport-photo-maker")}
           >
-            <Sparkles className="mr-1.5 h-3.5 w-3.5 text-alma-orange" aria-hidden="true" />
+
             Start Creating
           </Button>
 

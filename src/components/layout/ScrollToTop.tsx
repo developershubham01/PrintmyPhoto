@@ -56,3 +56,4 @@ export function ScrollToTop({ className, threshold = 280 }: ScrollToTopProps) {
     </AnimatePresence>
   );
 }
+

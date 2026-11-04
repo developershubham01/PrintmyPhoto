@@ -116,7 +116,7 @@ export function ToolCta({ title, text }: { title: string; text: string }) {
       <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed opacity-90">{text}</p>
       <a
         href="#/passport-photo-maker"
-        className="mt-5 inline-flex h-12 items-center rounded-xl bg-alma-yogurt px-6 text-[15px] font-semibold text-alma-collard shadow-card transition-transform hover:-translate-y-0.5"
+        className="mt-5 inline-flex h-12 items-center rounded-xl bg-white px-6 text-[15px] font-bold text-[#2a3d1c] shadow-lift transition-all hover:bg-[#fffdf5] hover:scale-[1.02] border border-white/40"
       >
         Open the free photo maker
       </a>

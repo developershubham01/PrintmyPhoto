@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useEditorStore } from "@/lib/store/editor-store";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { POPULAR_SIZES, findCountry } from "@/data/passport-sizes";
 import { PAPER_SIZES } from "@/data/paper-sizes";
@@ -154,6 +155,10 @@ function Hero() {
 
 function HeroMockup() {
   const [bg, setBg] = useState(BG_COLORS[0]);
+  const [paperFormat, setPaperFormat] = useState<"4x6" | "a4" | "letter">("4x6");
+
+  const photoCount = paperFormat === "4x6" ? 6 : paperFormat === "a4" ? 30 : 24;
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96, y: 20 }}
@@ -163,55 +168,64 @@ function HeroMockup() {
       aria-hidden="true"
     >
       {/* Soft atmospheric ambient glow */}
-      <div className="absolute -left-6 -top-6 h-36 w-36 rounded-full bg-alma-kiwi/30 blur-3xl" />
-      <div className="absolute -bottom-6 -right-4 h-40 w-40 rounded-full bg-alma-orange/20 blur-3xl" />
-      <div className="absolute right-6 top-16 h-24 w-24 rounded-full bg-alma-teal/20 blur-2xl" />
+      <div className="absolute -left-6 -top-6 h-36 w-36 rounded-full bg-alma-kiwi/25 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-6 -right-4 h-40 w-40 rounded-full bg-alma-orange/20 blur-3xl pointer-events-none" />
+      <div className="absolute right-6 top-16 h-24 w-24 rounded-full bg-alma-teal/15 blur-2xl pointer-events-none" />
 
-      {/* Editor card */}
+      {/* Main Editor Card */}
       <div className="relative rounded-[28px] sm:rounded-[32px] border bg-card/95 p-4 sm:p-5 shadow-lift backdrop-blur">
+        {/* Card header with official biometric pill badge */}
         <div className="flex items-center justify-between border-b border-border/70 pb-3">
-          <div className="flex gap-1.5">
+          <div className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-alma-orange/80" />
             <span className="h-2.5 w-2.5 rounded-full bg-alma-support/90" />
             <span className="h-2.5 w-2.5 rounded-full bg-alma-teal/70" />
           </div>
-          <span className="rounded-md bg-secondary px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider text-alma-collard dark:text-alma-kiwi">
-            Step 2 · Crop &amp; Biometric Guide
+          <span className="rounded-full bg-[#f0eee1] dark:bg-card px-3 py-1 text-[10.5px] font-bold uppercase tracking-wider text-alma-collard dark:text-alma-kiwi border border-border/60">
+            STEP 2 · CROP &amp; BIOMETRIC GUIDE
           </span>
         </div>
+
+        {/* Center layout: Photo on left, Sliders & Background on right */}
         <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
           {/* Photo frame with official biometric guidelines */}
           <div
-            className="relative w-[150px] overflow-hidden rounded-xl border-2 border-alma-collard/70 dark:border-alma-kiwi/70 shadow-card transition-colors duration-200"
+            className="relative w-[150px] overflow-hidden rounded-2xl border-2 border-[#435a29] dark:border-alma-kiwi/80 shadow-card transition-colors duration-200 shrink-0"
             style={{ aspectRatio: "35/45", backgroundColor: bg }}
           >
             <SamplePortrait />
             <svg viewBox="0 0 100 130" className="absolute inset-0 h-full w-full pointer-events-none">
-              <line x1="0" y1="46" x2="100" y2="46" stroke="rgba(195,214,56,0.95)" strokeWidth="1" strokeDasharray="5 3" />
-              <line x1="50" y1="0" x2="50" y2="130" stroke="rgba(20,108,132,0.4)" strokeWidth="0.75" strokeDasharray="4 3" />
-              <ellipse cx="50" cy="50" rx="26" ry="34" fill="none" stroke="rgba(20,108,132,0.8)" strokeWidth="1" strokeDasharray="6 4" />
+              {/* Yellow/lime dashed eye level line */}
+              <line x1="0" y1="49" x2="100" y2="49" stroke="#c3d638" strokeWidth="1" strokeDasharray="4 2.5" />
+              {/* Center vertical dashed axis */}
+              <line x1="50" y1="0" x2="50" y2="130" stroke="rgba(20,108,132,0.4)" strokeWidth="0.8" strokeDasharray="4 3" />
+              {/* Biometric dashed oval face guide */}
+              <ellipse cx="50" cy="53" rx="24" ry="32" fill="none" stroke="rgba(20,108,132,0.85)" strokeWidth="1" strokeDasharray="5 3" />
             </svg>
           </div>
+
+          {/* Sliders & Color Swatches */}
           <div className="flex flex-col justify-between py-1 w-full sm:w-auto">
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {[
-                { label: "Zoom 115%", pct: "75%" },
+                { label: "Zoom 115%", pct: "72%" },
                 { label: "Brightness +5%", pct: "55%" },
                 { label: "Contrast +3%", pct: "53%" },
               ].map((row) => (
                 <div key={row.label} className="flex items-center gap-2">
-                  <div className="h-1.5 w-20 rounded-full bg-secondary overflow-hidden">
+                  <div className="h-2 w-24 rounded-full bg-[#f0eee1] dark:bg-secondary overflow-hidden">
                     <div className="h-full bg-alma-collard dark:bg-alma-kiwi rounded-full" style={{ width: row.pct }} />
                   </div>
-                  <span className="text-[10.5px] font-medium text-muted-foreground">{row.label}</span>
+                  <span className="text-[11px] font-medium text-muted-foreground">{row.label}</span>
                 </div>
               ))}
             </div>
-            <div className="mt-3 sm:mt-0">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                Background
+
+            <div className="mt-3.5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">
+                BACKGROUND
               </p>
-              <div className="flex gap-1.5">
+              <div className="flex items-center gap-1.5">
                 {BG_COLORS.map((c) => (
                   <button
                     key={c}
@@ -219,7 +233,7 @@ function HeroMockup() {
                     aria-label={`Background ${c}`}
                     onClick={() => setBg(c)}
                     className={cn(
-                      "h-6 w-6 rounded-full border border-black/15 transition-transform hover:scale-110 cursor-pointer",
+                      "h-6.5 w-6.5 rounded-full border border-black/15 transition-transform hover:scale-110 cursor-pointer",
                       bg === c && "ring-2 ring-alma-collard dark:ring-alma-kiwi ring-offset-2 ring-offset-card",
                     )}
                     style={{ backgroundColor: c }}
@@ -229,43 +243,61 @@ function HeroMockup() {
             </div>
           </div>
         </div>
-        <div className="mt-4 flex items-center justify-between rounded-xl bg-secondary/60 px-3.5 py-2 sm:px-4 sm:py-2.5">
-          <span className="text-[11.5px] font-semibold text-alma-collard dark:text-alma-kiwi">35 × 45 mm · 300 DPI</span>
+
+        {/* Bottom dimensions bar */}
+        <div className="mt-4 flex items-center justify-between rounded-xl bg-[#f0eee1] dark:bg-secondary/60 px-4 py-2.5">
+          <span className="text-[12px] font-semibold text-alma-collard dark:text-alma-kiwi">35 × 45 mm · 300 DPI</span>
           <span className="text-[11px] text-muted-foreground font-mono">413 × 531 px</span>
         </div>
       </div>
 
-      {/* Floating: paper selector */}
+      {/* Floating: Interactive Paper Selector Badge (Top Left) */}
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-2 sm:-left-4 md:-left-6 top-8 hidden rounded-2xl border bg-card/95 p-3 shadow-lift backdrop-blur sm:block"
+        className="absolute -left-2 sm:-left-5 top-7 hidden rounded-2xl border bg-card/95 p-3.5 shadow-lift backdrop-blur sm:block z-20"
       >
-        <p className="text-[9.5px] font-semibold uppercase tracking-wider text-muted-foreground">Paper format</p>
+        <p className="text-[9.5px] font-bold uppercase tracking-wider text-muted-foreground">PAPER FORMAT</p>
         <div className="mt-1.5 flex items-center gap-1.5">
-          <span className="rounded-md bg-alma-collard dark:bg-alma-kiwi px-2.5 py-1 text-[11px] font-bold text-alma-yogurt dark:text-alma-collard">4×6 in</span>
-          <span className="rounded-md border px-2 py-1 text-[11px] font-medium">A4</span>
-          <span className="rounded-md border px-2 py-1 text-[11px] font-medium">Letter</span>
+          {(["4x6", "a4", "letter"] as const).map((fmt) => {
+            const labels = { "4x6": "4×6 in", a4: "A4", letter: "Letter" };
+            const active = paperFormat === fmt;
+            return (
+              <button
+                key={fmt}
+                type="button"
+                onClick={() => setPaperFormat(fmt)}
+                className={cn(
+                  "rounded-lg px-2.5 py-1 text-[11px] font-bold transition-all cursor-pointer",
+                  active
+                    ? "bg-alma-collard text-white dark:bg-alma-kiwi dark:text-alma-collard shadow-xs"
+                    : "border bg-card text-foreground/80 hover:bg-secondary",
+                )}
+              >
+                {labels[fmt]}
+              </button>
+            );
+          })}
         </div>
       </motion.div>
 
-      {/* Floating: PDF preview badge */}
+      {/* Floating: Live PDF Preview Badge (Bottom Right) */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-        className="absolute -bottom-6 -right-2 sm:-right-4 md:-right-6 hidden rounded-2xl border bg-card/95 p-3 shadow-lift backdrop-blur sm:block"
+        className="absolute -bottom-6 -right-2 sm:-right-5 hidden rounded-2xl border bg-card/95 p-3.5 shadow-lift backdrop-blur sm:block z-20"
       >
         <div className="flex items-center gap-2.5">
-          <div className="grid grid-cols-3 gap-1 rounded-md border border-border bg-white dark:bg-muted p-1">
+          <div className="grid grid-cols-3 gap-1 rounded-md border border-border bg-white dark:bg-muted p-1.5">
             {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i} className="h-3 w-2.5 rounded-[1px] border border-black/10" style={{ backgroundColor: bg }} />
+              <span key={i} className="h-3.5 w-3 rounded-[2px] border border-black/10 transition-colors" style={{ backgroundColor: bg }} />
             ))}
           </div>
           <div>
-            <p className="flex items-center gap-1 text-[12px] font-bold text-alma-collard dark:text-alma-kiwi">
-              <BadgeCheck className="h-3.5 w-3.5" /> 6 photos
+            <p className="flex items-center gap-1 text-[12.5px] font-bold text-alma-collard dark:text-alma-kiwi">
+              <BadgeCheck className="h-4 w-4" /> {photoCount} photos
             </p>
-            <p className="text-[10px] text-muted-foreground">Print-ready PDF</p>
+            <p className="text-[10px] text-muted-foreground font-medium">Print-ready PDF</p>
           </div>
         </div>
       </motion.div>
@@ -273,68 +305,68 @@ function HeroMockup() {
   );
 }
 
-/** Elegant passport portrait illustration with studio lighting and natural silhouette. */
+/** Elegant passport portrait illustration matching biometric passport standards. */
 function SamplePortrait() {
   return (
     <svg viewBox="0 0 100 130" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#2c3a44" />
-          <stop offset="100%" stopColor="#1a242c" />
+          <stop offset="0%" stopColor="#1e2c38" />
+          <stop offset="100%" stopColor="#131e28" />
         </linearGradient>
         <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#eed5c4" />
-          <stop offset="100%" stopColor="#e2c0aa" />
-        </linearGradient>
-        <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#30241b" />
-          <stop offset="100%" stopColor="#1c140e" />
+          <stop offset="100%" stopColor="#e3c2ac" />
         </linearGradient>
       </defs>
 
-      {/* Suit jacket shoulders */}
+      {/* Torso & Suit jacket shoulders */}
       <path
-        d="M6 130 C12 108 28 98 44 96 L50 106 L56 96 C72 98 88 108 94 130 Z"
+        d="M10 130 C16 104 32 94 44 92 L50 102 L56 92 C68 94 84 104 90 130 Z"
         fill="url(#suitGrad)"
       />
-      {/* Crisp shirt collar & lapels */}
-      <path d="M44 96 L50 114 L56 96 L50 104 Z" fill="#ffffff" />
-      <path d="M49 104 L50 126 L51 104 Z" fill="#146c84" />
-      <path d="M38 98 L46 116 L43 118 L34 102 Z" fill="#243038" />
-      <path d="M62 98 L54 116 L57 118 L66 102 Z" fill="#243038" />
+      {/* Crisp white shirt collar notch */}
+      <path d="M44 92 L50 110 L56 92 L50 99 Z" fill="#ffffff" />
+      <path d="M49 99 L50 120 L51 99 Z" fill="#146c84" />
+      <path d="M37 94 L45 112 L42 114 L33 98 Z" fill="#17222c" />
+      <path d="M63 94 L55 112 L58 114 L67 98 Z" fill="#17222c" />
 
       {/* Neck */}
-      <rect x="43" y="78" width="14" height="20" rx="4" fill="url(#skinGrad)" />
-      <path d="M43 88 C47 92 53 92 57 88 Z" fill="rgba(0,0,0,0.06)" />
+      <rect x="44" y="76" width="12" height="18" rx="3" fill="url(#skinGrad)" />
+      <path d="M44 82 C47 86 53 86 56 82 Z" fill="rgba(0,0,0,0.06)" />
 
-      {/* Head and ears */}
-      <ellipse cx="28" cy="54" rx="3.5" ry="6.5" fill="#e2c0aa" />
-      <ellipse cx="72" cy="54" rx="3.5" ry="6.5" fill="#e2c0aa" />
-      <ellipse cx="50" cy="52" rx="22" ry="27" fill="url(#skinGrad)" />
+      {/* Ears */}
+      <ellipse cx="29" cy="54" rx="2.8" ry="5.5" fill="#e3c2ac" />
+      <ellipse cx="71" cy="54" rx="2.8" ry="5.5" fill="#e3c2ac" />
 
-      {/* Clean hairline & styled hair */}
+      {/* Head oval */}
+      <ellipse cx="50" cy="53" rx="21" ry="25.5" fill="url(#skinGrad)" />
+
+      {/* Styled Hair */}
       <path
-        d="M27 48 C27 28 36 20 50 20 C64 20 73 28 73 48 C73 34 64 27 50 27 C36 27 27 34 27 48 Z"
-        fill="url(#hairGrad)"
+        d="M29 50 C29 28 38 21 50 21 C62 21 71 28 71 50 C71 36 62 29 50 29 C38 29 29 36 29 50 Z"
+        fill="#221811"
       />
       <path
-        d="M26 44 C26 24 38 18 50 18 C62 18 74 24 74 44 C72 30 62 23 50 23 C38 23 28 30 26 44 Z"
-        fill="url(#hairGrad)"
+        d="M29 46 C31 29 40 23 50 23 C60 23 69 29 71 46 C68 35 60 31 50 31 C40 31 32 35 29 46 Z"
+        fill="#221811"
       />
 
-      {/* Subtle refined facial features */}
       {/* Eyebrows */}
-      <path d="M36 43 Q42 41 46 43" stroke="#241a12" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-      <path d="M54 43 Q58 41 64 43" stroke="#241a12" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-      {/* Eyes */}
-      <ellipse cx="41" cy="48" rx="2.8" ry="1.8" fill="#241a12" />
-      <ellipse cx="59" cy="48" rx="2.8" ry="1.8" fill="#241a12" />
-      <circle cx="41.8" cy="47.5" r="0.6" fill="#ffffff" />
-      <circle cx="59.8" cy="47.5" r="0.6" fill="#ffffff" />
+      <path d="M37 45 Q42 43 47 45" stroke="#1e140d" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+      <path d="M53 45 Q58 43 63 45" stroke="#1e140d" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+
+      {/* Eyes with reflections */}
+      <ellipse cx="42" cy="50" rx="3.2" ry="2.2" fill="#1e140d" />
+      <ellipse cx="58" cy="50" rx="3.2" ry="2.2" fill="#1e140d" />
+      <circle cx="43" cy="49.2" r="0.8" fill="#ffffff" />
+      <circle cx="59" cy="49.2" r="0.8" fill="#ffffff" />
+
       {/* Nose bridge & tip */}
-      <path d="M50 47 L49 57 Q50 59 52 57" stroke="#caa28b" strokeWidth="1.3" strokeLinecap="round" fill="none" />
-      {/* Neutral mouth (passport requirement: neutral expression) */}
-      <path d="M44 67 Q50 68 56 67" stroke="#a86858" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+      <path d="M49.5 49 L49 59 Q50 61 51.5 59" stroke="#caa28b" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+
+      {/* Neutral mouth (official passport requirement) */}
+      <path d="M45 70 Q50 71 55 70" stroke="#b06a58" strokeWidth="1.8" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
@@ -402,12 +434,27 @@ function HowItWorks() {
 /* ──────────────────────────── Upload CTA ──────────────────────────── */
 
 function UploadCta() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const loadImage = useEditorStore((s) => s.loadImage);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        await loadImage(file);
+        window.location.hash = "#/passport-photo-maker";
+      } catch {
+        window.location.hash = "#/passport-photo-maker";
+      }
+    }
+  };
+
   return (
     <section aria-labelledby="upload-cta" className="container-editorial">
-      <div className="relative overflow-hidden rounded-[32px] border bg-[image:var(--alma-gradient-primary)] p-8 text-alma-yogurt shadow-lift md:p-12">
+      <div className="relative overflow-hidden rounded-[32px] border border-alma-collard/30 bg-[image:var(--alma-gradient-primary)] p-8 text-alma-yogurt shadow-lift md:p-12">
         <div
           aria-hidden="true"
-          className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-alma-kiwi/25 blur-2xl"
+          className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-alma-kiwi/25 blur-2xl pointer-events-none"
         />
         <div className="relative grid items-center gap-6 md:grid-cols-[1fr_auto]">
           <div>
@@ -419,13 +466,25 @@ function UploadCta() {
               cropping, sizing and sheet layout for you.
             </p>
           </div>
-          <Button
-            className="h-14 rounded-2xl bg-alma-yogurt px-8 text-[16px] font-semibold text-alma-collard shadow-lift transition-transform hover:-translate-y-0.5"
-            onClick={() => (window.location.hash = "#/passport-photo-maker")}
-          >
-            <CloudUpload className="mr-2 h-5 w-5" aria-hidden="true" />
-            Upload your photo
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="sr-only"
+              onChange={handleFileChange}
+              aria-label="Upload photo"
+            />
+            <Button
+              type="button"
+              variant="white"
+              className="h-14 rounded-2xl bg-white text-[#2a3d1c] hover:bg-[#fffdf5] hover:text-[#2a3d1c] px-8 text-[16px] font-bold shadow-lift transition-all hover:scale-[1.02] active:scale-[0.98] border border-white/50 cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <CloudUpload className="mr-2 h-5 w-5 text-alma-collard shrink-0" aria-hidden="true" />
+              Upload your photo
+            </Button>
+          </div>
         </div>
       </div>
     </section>
@@ -435,6 +494,8 @@ function UploadCta() {
 /* ─────────────────────────── Popular sizes ─────────────────────────── */
 
 function PopularSizes() {
+  const setPhotoSize = useEditorStore((s) => s.setPhotoSize);
+
   return (
     <section aria-labelledby="sizes-heading" className="container-editorial py-14 md:py-20">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -460,28 +521,38 @@ function PopularSizes() {
         {POPULAR_SIZES.slice(0, 6).map((s) => {
           const country = findCountry(s.countryId);
           return (
-            <button
+            <div
               key={s.id}
-              type="button"
-              onClick={() => (window.location.hash = country && country.id !== "generic" ? `#/passport-photo-sizes/${country.id}` : "#/passport-photo-sizes")}
-              className="group flex items-center gap-4 rounded-2xl border bg-card p-5 text-left shadow-card transition-all hover:-translate-y-0.5 hover:shadow-lift"
+              onClick={() => {
+                setPhotoSize({ ...s, countryId: s.countryId ?? null });
+                window.location.hash = "#/passport-photo-maker";
+              }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  setPhotoSize({ ...s, countryId: s.countryId ?? null });
+                  window.location.hash = "#/passport-photo-maker";
+                }
+              }}
+              className="group flex items-center gap-4 rounded-2xl border bg-card p-5 text-left shadow-card transition-all hover:-translate-y-0.5 hover:shadow-lift cursor-pointer"
             >
               <span
                 aria-hidden="true"
-                className="h-16 w-13 shrink-0 rounded-lg border-2 border-alma-collard/40 bg-alma-yogurt"
+                className="h-16 w-13 shrink-0 rounded-lg border-2 border-alma-collard/40 bg-alma-yogurt transition-colors group-hover:border-alma-collard"
                 style={{ width: (64 * s.widthMm) / s.heightMm, height: 64 }}
               />
-              <span>
+              <span className="flex-1">
                 <span className="flex items-center gap-2 font-display text-lg font-semibold">
                   {country?.flag} {formatDimensions(s.widthMm, s.heightMm)}
                 </span>
                 <span className="mt-0.5 block text-[13px] text-muted-foreground">{s.label}</span>
-                <span className="mt-1 inline-flex items-center gap-1 text-[12px] font-semibold text-alma-accent">
-                  View size details
+                <span className="mt-2 inline-flex items-center gap-1 text-[12px] font-semibold text-alma-collard dark:text-alma-kiwi group-hover:underline">
+                  Use this size in maker
                   <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </span>
               </span>
-            </button>
+            </div>
           );
         })}
       </div>
@@ -492,6 +563,7 @@ function PopularSizes() {
 /* ──────────────────────── Paper sizes (live math) ─────────────────────── */
 
 function PaperSizesSection() {
+  const setPaper = useEditorStore((s) => s.setPaper);
   const rows = useMemo(() => {
     return PAPER_SIZES.map((p) => {
       const grid = computeGrid({
@@ -528,22 +600,36 @@ function PaperSizesSection() {
                 <th scope="col" className="px-5 py-3.5 font-semibold">Paper</th>
                 <th scope="col" className="px-5 py-3.5 font-semibold">Dimensions</th>
                 <th scope="col" className="px-5 py-3.5 font-semibold">Grid</th>
-                <th scope="col" className="px-5 py-3.5 text-right font-semibold">Photos per sheet</th>
+                <th scope="col" className="px-5 py-3.5 text-center font-semibold">Photos per sheet</th>
+                <th scope="col" className="px-5 py-3.5 text-right font-semibold">Action</th>
               </tr>
             </thead>
             <tbody>
               {rows.map(({ paper, count, grid }) => (
-                <tr key={paper.id} className="border-b border-border/60 last:border-0">
+                <tr key={paper.id} className="border-b border-border/60 last:border-0 hover:bg-secondary/30 transition-colors">
                   <td className="px-5 py-3.5 font-semibold">{paper.label}</td>
                   <td className="px-5 py-3.5 tabular-nums text-muted-foreground">
                     {formatDimensions(paper.widthMm, paper.heightMm)}
                   </td>
                   <td className="px-5 py-3.5 tabular-nums text-muted-foreground">{grid}</td>
-                  <td className="px-5 py-3.5 text-right">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 font-display text-[15px] font-bold text-alma-collard">
+                  <td className="px-5 py-3.5 text-center">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 font-display text-[15px] font-bold text-alma-collard dark:text-alma-kiwi">
                       <LayoutGrid className="h-3.5 w-3.5" aria-hidden="true" />
                       {count}
                     </span>
+                  </td>
+                  <td className="px-5 py-3.5 text-right">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8.5 rounded-lg px-3 text-xs font-semibold text-alma-collard dark:text-alma-kiwi hover:bg-secondary"
+                      onClick={() => {
+                        setPaper(paper);
+                        window.location.hash = "#/passport-photo-maker";
+                      }}
+                    >
+                      Use this paper
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -566,6 +652,8 @@ function PaperSizesSection() {
 
 function BackgroundSection() {
   const [color, setColor] = useState(BG_COLORS[0]);
+  const setBg = useEditorStore((s) => s.setBg);
+
   return (
     <section aria-labelledby="bg-heading" className="container-editorial py-14 md:py-20">
       <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -589,16 +677,28 @@ function BackgroundSection() {
               "Honest labeling — we never promise guaranteed compliance",
             ].map((t) => (
               <li key={t} className="flex items-start gap-2.5">
-                <Check className="mt-0.5 h-4.5 w-4.5 shrink-0 text-alma-collard" aria-hidden="true" />
+                <Check className="mt-0.5 h-4.5 w-4.5 shrink-0 text-alma-collard dark:text-alma-kiwi" aria-hidden="true" />
                 {t}
               </li>
             ))}
           </ul>
+          <div className="mt-6">
+            <Button
+              className="btn-gradient h-11 rounded-xl px-6 font-semibold"
+              onClick={() => {
+                setBg({ mode: "color", color, autoRemove: true });
+                window.location.hash = "#/passport-photo-maker";
+              }}
+            >
+              Start photo maker with this background
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            </Button>
+          </div>
         </div>
         <div className="relative mx-auto w-full max-w-[380px]">
           <div className="rounded-[32px] border bg-card p-6 shadow-lift">
             <div
-              className="mx-auto w-[190px] overflow-hidden rounded-2xl border shadow-card transition-colors duration-300"
+              className="mx-auto w-[190px] overflow-hidden rounded-2xl border-2 border-[#435a29] dark:border-alma-kiwi/80 shadow-card transition-colors duration-300"
               style={{ aspectRatio: "35/45", backgroundColor: color }}
             >
               <SamplePortrait />
@@ -612,14 +712,14 @@ function BackgroundSection() {
                   aria-pressed={color === c}
                   onClick={() => setColor(c)}
                   className={cn(
-                    "h-9 w-9 rounded-full border border-black/15 transition-transform hover:scale-110",
-                    color === c && "ring-2 ring-alma-collard ring-offset-2 ring-offset-card",
+                    "h-9 w-9 rounded-full border border-black/15 transition-transform hover:scale-110 cursor-pointer",
+                    color === c && "ring-2 ring-alma-collard dark:ring-alma-kiwi ring-offset-2 ring-offset-card",
                   )}
                   style={{ backgroundColor: c }}
                 />
               ))}
             </div>
-            <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
+            <p className="mt-4 text-center text-[12.5px] text-muted-foreground font-medium">
               Try it — pick a background color
             </p>
           </div>
