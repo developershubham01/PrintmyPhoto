@@ -76,6 +76,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
   category: "photography",
+  other: {
+    "google-adsense-account": "ca-pub-2733238354385302",
+  },
 };
 
 export const viewport: Viewport = {
@@ -97,14 +100,12 @@ export default function RootLayout({
           {children}
           <Toaster position="bottom-center" richColors closeButton />
         </ThemeProvider>
-        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
-          <Script
-            id="google-adsense"
-            strategy="afterInteractive"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
-            crossOrigin="anonymous"
-          />
-        )}
+        <Script
+          id="google-adsense"
+          strategy="afterInteractive"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "ca-pub-2733238354385302"}`}
+          crossOrigin="anonymous"
+        />
         <JsonLd data={organizationSchema()} />
         <JsonLd data={webSiteSchema()} />
         <JsonLd data={webApplicationSchema()} />

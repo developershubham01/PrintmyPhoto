@@ -40,7 +40,7 @@ export function AdSlot({
   label = "Advertisement",
   className = "",
 }: AdSlotProps) {
-  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "";
+  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "ca-pub-2733238354385302";
   const adsEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "1";
   const consented = useConsentStore((s) => s.status === "accepted");
   const pushed = useRef(false);

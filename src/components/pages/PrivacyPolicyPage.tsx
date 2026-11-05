@@ -132,27 +132,41 @@ export function PrivacyPolicyPage() {
           recorded. If no analytics provider is configured, nothing is sent at all.
         </p>
 
-        <h2>Advertising</h2>
+        <h2>Advertising & Google AdSense</h2>
         <p>
-          The site may display advertising through Google AdSense. The advertising script is
-          consent-gated: it loads only after you press &quot;Accept all&quot;. Advertising is also
-          disabled entirely until the operator&apos;s publisher account is approved and configured
-          through environment variables — so on many deployments you will never see an ad or an ad
-          script at all.
+          We use Google AdSense to display advertisements on our website. To comply with Google&apos;s
+          mandatory advertising policies, please note the following:
         </p>
-        <p>
-          When enabled, Google and its partners may use cookies or device identifiers to serve and
-          measure ads, including personalised ads based on your prior visits to this or other
-          websites. You can review Google&apos;s own practices at{" "}
+        <ul className="list-disc pl-5 space-y-2 text-[14.5px] leading-relaxed">
+          <li>
+            <strong>Third-party cookies:</strong> Third-party vendors, including Google, use cookies to serve ads based on a user&apos;s prior visits to this website or other websites.
+          </li>
+          <li>
+            <strong>Personalised advertising:</strong> Google&apos;s use of advertising cookies enables it and its partners to serve ads to users based on their visit to our site and/or other sites on the Internet.
+          </li>
+          <li>
+            <strong>Opting out:</strong> You may opt out of personalized advertising at any time by visiting{" "}
+            <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="underline font-medium text-alma-accent">
+              Google Ads Settings
+            </a>
+            . Alternatively, you can opt out of a third-party vendor&apos;s use of cookies for personalized advertising by visiting{" "}
+            <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="underline font-medium text-alma-accent">
+              www.aboutads.info
+            </a>
+            .
+          </li>
+        </ul>
+        <p className="mt-4">
+          For further details on how Google handles advertising data, review Google&apos;s Partner Policy at{" "}
           <a
             href="https://policies.google.com/technologies/ads"
             target="_blank"
             rel="noopener noreferrer"
+            className="underline font-medium text-alma-accent"
           >
             policies.google.com/technologies/ads
-          </a>{" "}
-          and opt out of personalised advertising in your Google Ad Settings. Choosing
-          &quot;Essential only&quot; prevents the AdSense script from loading in the first place.
+          </a>
+          . Choosing &quot;Essential only&quot; in our cookie consent manager also prevents advertising scripts from loading.
         </p>
 
         <h2>Children&apos;s privacy</h2>
