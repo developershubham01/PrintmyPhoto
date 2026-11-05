@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/layout/AppShell";
 import { JsonLd, howToSchema } from "@/components/seo/JsonLd";
-import { ROUTE_META, parsePath } from "@/lib/router";
+import { ROUTE_META, parsePath } from "@/lib/routes";
 
 interface CatchAllPageProps {
   params: Promise<{ slug?: string[] }>;
