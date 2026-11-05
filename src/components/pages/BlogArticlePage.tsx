@@ -38,13 +38,14 @@ function renderInline(text: string): ReactNode[] {
     const href = segments[i + 2];
     if (label && href) {
       const external = /^https?:\/\//i.test(href);
+      const cleanHref = external ? href : href.startsWith("#") ? href.replace(/^#/, "") : href;
       nodes.push(
         external ? (
-          <a key={nodes.length} href={href} target="_blank" rel="noopener noreferrer">
+          <a key={nodes.length} href={cleanHref} target="_blank" rel="noopener noreferrer">
             {label}
           </a>
         ) : (
-          <a key={nodes.length} href={href}>
+          <a key={nodes.length} href={cleanHref}>
             {label}
           </a>
         ),
@@ -133,7 +134,7 @@ function RelatedCard({ article }: { article: BlogArticle }) {
   return (
     <li className="h-full">
       <a
-        href={`#/blog/${article.slug}`}
+        href={`/blog/${article.slug}`}
         className="group flex h-full flex-col rounded-2xl border bg-card p-6 shadow-card outline-none transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-alma-accent/60"
       >
         <Badge variant="secondary" className="bg-secondary text-secondary-foreground">
@@ -181,13 +182,13 @@ export function BlogArticlePage(props: { slug?: string }) {
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <a
-                  href="#/blog"
+                  href="/blog"
                   className="inline-flex h-11 items-center rounded-xl bg-alma-collard px-5 text-sm font-semibold text-alma-yogurt shadow-card transition-transform hover:-translate-y-0.5"
                 >
                   Browse all guides
                 </a>
                 <a
-                  href="#/passport-photo-sizes"
+                  href="/passport-photo-sizes"
                   className="inline-flex h-11 items-center rounded-xl border bg-card px-5 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
                 >
                   Passport photo sizes

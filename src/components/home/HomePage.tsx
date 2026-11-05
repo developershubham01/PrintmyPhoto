@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useEditorStore } from "@/lib/store/editor-store";
+import { useAppRoute } from "@/lib/router";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { POPULAR_SIZES, findCountry } from "@/data/passport-sizes";
 import { PAPER_SIZES } from "@/data/paper-sizes";
@@ -70,6 +72,8 @@ export function HomePage() {
 /* ─────────────────────────────── Hero ─────────────────────────────── */
 
 function Hero() {
+  const { navigate } = useAppRoute();
+
   return (
     <section className="hero-wash relative overflow-hidden border-b border-border/70">
       <div className="container-editorial grid items-center gap-10 py-10 sm:py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr]">
@@ -119,7 +123,7 @@ function Hero() {
           >
             <Button
               className="btn-gradient h-12 sm:h-13 rounded-xl px-6 sm:px-7 text-[15px] sm:text-[15.5px] font-semibold"
-              onClick={() => (window.location.hash = "#/passport-photo-maker")}
+              onClick={() => navigate("/passport-photo-maker")}
             >
               Create Your Photo
               <ArrowRight className="ml-2 h-4.5 w-4.5" aria-hidden="true" />
@@ -127,7 +131,7 @@ function Hero() {
             <Button
               variant="secondary"
               className="h-12 sm:h-13 rounded-xl px-6 sm:px-7 text-[15px] sm:text-[15.5px] font-semibold"
-              onClick={() => (window.location.hash = "#/passport-photo-sizes")}
+              onClick={() => navigate("/passport-photo-sizes")}
             >
               Explore Photo Sizes
             </Button>
@@ -423,9 +427,9 @@ function HowItWorks() {
       </div>
       <p className="mt-6 text-center text-sm text-muted-foreground">
         Want the full walkthrough?{" "}
-        <a href="#/how-it-works" className="font-semibold text-alma-accent underline underline-offset-4">
+        <Link href="/how-it-works" className="font-semibold text-alma-accent underline underline-offset-4">
           See how it works in detail
-        </a>
+        </Link>
       </p>
     </section>
   );
@@ -434,6 +438,7 @@ function HowItWorks() {
 /* ──────────────────────────── Upload CTA ──────────────────────────── */
 
 function UploadCta() {
+  const { navigate } = useAppRoute();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const loadImage = useEditorStore((s) => s.loadImage);
 
@@ -442,9 +447,9 @@ function UploadCta() {
     if (file) {
       try {
         await loadImage(file);
-        window.location.hash = "#/passport-photo-maker";
+        navigate("/passport-photo-maker");
       } catch {
-        window.location.hash = "#/passport-photo-maker";
+        navigate("/passport-photo-maker");
       }
     }
   };
@@ -494,6 +499,7 @@ function UploadCta() {
 /* ─────────────────────────── Popular sizes ─────────────────────────── */
 
 function PopularSizes() {
+  const { navigate } = useAppRoute();
   const setPhotoSize = useEditorStore((s) => s.setPhotoSize);
 
   return (
@@ -511,7 +517,7 @@ function PopularSizes() {
             every preset links to the official source so you can double-check.
           </p>
         </div>
-        <Button variant="outline" className="h-12 rounded-xl px-6 font-semibold" onClick={() => (window.location.hash = "#/passport-photo-sizes")}>
+        <Button variant="outline" className="h-12 rounded-xl px-6 font-semibold" onClick={() => navigate("/passport-photo-sizes")}>
           All countries
           <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
         </Button>
@@ -525,14 +531,14 @@ function PopularSizes() {
               key={s.id}
               onClick={() => {
                 setPhotoSize({ ...s, countryId: s.countryId ?? null });
-                window.location.hash = "#/passport-photo-maker";
+                navigate("/passport-photo-maker");
               }}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   setPhotoSize({ ...s, countryId: s.countryId ?? null });
-                  window.location.hash = "#/passport-photo-maker";
+                  navigate("/passport-photo-maker");
                 }
               }}
               className="group flex items-center gap-4 rounded-2xl border bg-card p-5 text-left shadow-card transition-all hover:-translate-y-0.5 hover:shadow-lift cursor-pointer"
@@ -563,6 +569,7 @@ function PopularSizes() {
 /* ──────────────────────── Paper sizes (live math) ─────────────────────── */
 
 function PaperSizesSection() {
+  const { navigate } = useAppRoute();
   const setPaper = useEditorStore((s) => s.setPaper);
   const rows = useMemo(() => {
     return PAPER_SIZES.map((p) => {
@@ -625,7 +632,7 @@ function PaperSizesSection() {
                       className="h-8.5 rounded-lg px-3 text-xs font-semibold text-alma-collard dark:text-alma-kiwi hover:bg-secondary"
                       onClick={() => {
                         setPaper(paper);
-                        window.location.hash = "#/passport-photo-maker";
+                        navigate("/passport-photo-maker");
                       }}
                     >
                       Use this paper
@@ -638,9 +645,9 @@ function PaperSizesSection() {
         </div>
         <p className="mt-4 text-[13px] text-muted-foreground">
           Using a different photo size or spacing?{" "}
-          <a href="#/passport-photo-maker" className="font-semibold text-alma-accent underline underline-offset-2">
+          <Link href="/passport-photo-maker" className="font-semibold text-alma-accent underline underline-offset-2">
             The arranger calculates it exactly
-          </a>
+          </Link>
           .
         </p>
       </div>
@@ -651,6 +658,7 @@ function PaperSizesSection() {
 /* ─────────────────────── Background customization ─────────────────────── */
 
 function BackgroundSection() {
+  const { navigate } = useAppRoute();
   const [color, setColor] = useState(BG_COLORS[0]);
   const setBg = useEditorStore((s) => s.setBg);
 
@@ -687,7 +695,7 @@ function BackgroundSection() {
               className="btn-gradient h-11 rounded-xl px-6 font-semibold"
               onClick={() => {
                 setBg({ mode: "color", color, autoRemove: true });
-                window.location.hash = "#/passport-photo-maker";
+                navigate("/passport-photo-maker");
               }}
             >
               Start photo maker with this background
@@ -806,9 +814,9 @@ function PrivacySection() {
           </div>
           <p className="mt-4 text-[13px] text-muted-foreground">
             Read the full{" "}
-            <a href="#/privacy-policy" className="font-semibold text-alma-accent underline underline-offset-2">
+            <Link href="/privacy-policy" className="font-semibold text-alma-accent underline underline-offset-2">
               Privacy Policy
-            </a>
+            </Link>
             .
           </p>
         </div>
@@ -847,8 +855,8 @@ function MidEducational() {
           size easily; screenshots and heavily compressed images may not, which is why the editor
           measures the effective resolution of your crop and tells you before you commit to
           printing. Learn more in the{" "}
-          <a href="#/photo-printing-guide">photo printing guide</a> or browse{" "}
-          <a href="#/passport-photo-sizes">sizes by country</a>.
+          <Link href="/photo-printing-guide" className="font-semibold text-alma-accent underline underline-offset-2">photo printing guide</Link> or browse{" "}
+          <Link href="/passport-photo-sizes" className="font-semibold text-alma-accent underline underline-offset-2">sizes by country</Link>.
         </p>
       </div>
     </section>
@@ -858,6 +866,8 @@ function MidEducational() {
 /* ───────────────────────────── FAQ teaser ───────────────────────────── */
 
 function FaqTeaser() {
+  const { navigate } = useAppRoute();
+
   return (
     <section aria-labelledby="faq-heading" className="container-editorial max-w-[860px] py-14 md:py-20">
       <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-alma-accent">FAQ</p>
@@ -877,7 +887,7 @@ function FaqTeaser() {
         ))}
       </Accordion>
       <div className="mt-6">
-        <Button variant="outline" className="h-12 rounded-xl px-6 font-semibold" onClick={() => (window.location.hash = "#/faq")}>
+        <Button variant="outline" className="h-12 rounded-xl px-6 font-semibold" onClick={() => navigate("/faq")}>
           All questions
           <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
         </Button>
@@ -889,6 +899,8 @@ function FaqTeaser() {
 /* ────────────────────────────── Final CTA ────────────────────────────── */
 
 function FinalCta() {
+  const { navigate } = useAppRoute();
+
   return (
     <section aria-labelledby="final-cta" className="container-editorial pb-4">
       <div className="relative overflow-hidden rounded-[32px] border bg-card p-10 text-center shadow-lift md:p-14">
@@ -903,7 +915,7 @@ function FinalCta() {
           </p>
           <Button
             className="btn-gradient mt-8 h-14 rounded-2xl px-9 text-[16px] font-semibold"
-            onClick={() => (window.location.hash = "#/passport-photo-maker")}
+            onClick={() => navigate("/passport-photo-maker")}
           >
             Create Your Photo
             <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />

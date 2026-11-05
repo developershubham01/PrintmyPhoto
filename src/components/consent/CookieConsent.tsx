@@ -46,11 +46,11 @@ export function CookieConsent() {
                 Your photos are always processed locally in your browser — never uploaded. We use
                 cookies only for optional, privacy-conscious analytics and future advertising.
                 You choose. See our{" "}
-                <a href="#/cookie-policy" className="font-medium text-alma-accent underline underline-offset-2">
+                <a href="/cookie-policy" className="font-medium text-alma-accent underline underline-offset-2">
                   Cookie Policy
                 </a>{" "}
                 and{" "}
-                <a href="#/privacy-policy" className="font-medium text-alma-accent underline underline-offset-2">
+                <a href="/privacy-policy" className="font-medium text-alma-accent underline underline-offset-2">
                   Privacy Policy
                 </a>
                 .

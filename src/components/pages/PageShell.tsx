@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ChevronRight, Home } from "lucide-react";
 
@@ -41,25 +42,28 @@ export function PageShell({
         <nav aria-label="Breadcrumb" className="mb-6">
           <ol className="flex flex-wrap items-center gap-1 text-[13px] text-muted-foreground">
             <li>
-              <a href="#/" className="inline-flex items-center gap-1 rounded hover:text-foreground">
+              <Link href="/" className="inline-flex items-center gap-1 rounded hover:text-foreground">
                 <Home className="h-3.5 w-3.5" aria-hidden="true" />
                 Home
-              </a>
+              </Link>
             </li>
-            {crumbs.map((c, i) => (
-              <li key={i} className="flex items-center gap-1">
-                <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-                {c.href ? (
-                  <a href={`#${c.href}`} className="rounded hover:text-foreground">
-                    {c.label}
-                  </a>
-                ) : (
-                  <span aria-current="page" className="font-medium text-foreground">
-                    {c.label}
-                  </span>
-                )}
-              </li>
-            ))}
+            {crumbs.map((c, i) => {
+              const href = c.href ? (c.href.startsWith("#") ? c.href.replace(/^#/, "") : c.href) : undefined;
+              return (
+                <li key={i} className="flex items-center gap-1">
+                  <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  {href ? (
+                    <Link href={href} className="rounded hover:text-foreground">
+                      {c.label}
+                    </Link>
+                  ) : (
+                    <span aria-current="page" className="font-medium text-foreground">
+                      {c.label}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ol>
         </nav>
 
@@ -114,12 +118,12 @@ export function ToolCta({ title, text }: { title: string; text: string }) {
     <div className="my-10 rounded-2xl border bg-[image:var(--alma-gradient-primary)] p-6 text-alma-yogurt shadow-card md:p-8">
       <p className="font-display text-2xl font-semibold">{title}</p>
       <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed opacity-90">{text}</p>
-      <a
-        href="#/passport-photo-maker"
+      <Link
+        href="/passport-photo-maker"
         className="mt-5 inline-flex h-12 items-center rounded-xl bg-white px-6 text-[15px] font-bold text-[#2a3d1c] shadow-lift transition-all hover:bg-[#fffdf5] hover:scale-[1.02] border border-white/40"
       >
         Open the free photo maker
-      </a>
+      </Link>
     </div>
   );
 }

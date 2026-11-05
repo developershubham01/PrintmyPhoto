@@ -298,17 +298,17 @@ function IntegrityNote() {
 function RelatedLinkCards() {
   const links = [
     {
-      href: "#/photo-printing-guide",
+      href: "/photo-printing-guide",
       title: "Photo printing guide",
       text: "Printer settings, actual-size scaling and paper choices for correct prints.",
     },
     {
-      href: "#/how-it-works",
+      href: "/how-it-works",
       title: "How the tool works",
       text: "The four phases from upload to a 300 DPI print-ready download.",
     },
     {
-      href: "#/faq",
+      href: "/faq",
       title: "Frequently asked questions",
       text: "Sizes, counts, privacy and what this free tool does not do.",
     },
@@ -378,7 +378,7 @@ function CountryGuideView({
     >
       <div className="prose-alma">
         <a
-          href="#/passport-photo-sizes"
+          href="/passport-photo-sizes"
           onClick={(e) => {
             e.preventDefault();
             onBack();
@@ -424,7 +424,7 @@ function CountryGuideView({
         <ol>
           <li>
             <strong>Choose the size.</strong> Open the{" "}
-            <a href="#/passport-photo-maker">free photo maker</a> and search for {country.name}, or
+            <a href="/passport-photo-maker">free photo maker</a> and search for {country.name}, or
             pick &ldquo;{primary ? primary.label : "your size"}&rdquo;
             {primary
               ? ` — ${formatDimensions(primary.widthMm, primary.heightMm)}`
@@ -444,7 +444,7 @@ function CountryGuideView({
           </li>
           <li>
             <strong>Print at Actual size / 100%.</strong> Never use Fit to page: scaling changes the
-            millimetre size. The <a href="#/photo-printing-guide">photo printing guide</a> explains
+            millimetre size. The <a href="/photo-printing-guide">photo printing guide</a> explains
             every setting that matters.
           </li>
           <li>
@@ -518,13 +518,16 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
 
   const openCountry = (id: string) => {
     setSelectedId(id);
+    if (typeof window !== "undefined") {
+      window.history.pushState(null, "", `/passport-photo-sizes/${id}`);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const backToDirectory = () => {
     setSelectedId(null);
-    if (typeof window !== "undefined" && window.location.hash.startsWith("#/passport-photo-sizes/")) {
-      window.location.hash = "#/passport-photo-sizes";
+    if (typeof window !== "undefined") {
+      window.history.pushState(null, "", `/passport-photo-sizes`);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -544,7 +547,7 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
             return (
               <li key={id}>
                 <a
-                  href={`#/passport-photo-sizes/${id}`}
+                  href={`/passport-photo-sizes/${id}`}
                   onClick={(e) => {
                     e.preventDefault();
                     openCountry(id);
@@ -565,10 +568,10 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
         <p className="font-display text-lg font-semibold">Related pages</p>
         <ul className="mt-3 space-y-1">
           {[
-            { href: "#/photo-printing-guide", label: "Photo printing guide" },
-            { href: "#/how-it-works", label: "How the tool works" },
-            { href: "#/faq", label: "Frequently asked questions" },
-            { href: "#/blog", label: "Blog and printing tips" },
+            { href: "/photo-printing-guide", label: "Photo printing guide" },
+            { href: "/how-it-works", label: "How the tool works" },
+            { href: "/faq", label: "Frequently asked questions" },
+            { href: "/blog", label: "Blog and printing tips" },
           ].map((l) => (
             <li key={l.href}>
               <a
@@ -607,7 +610,7 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
           rules a size table cannot capture — background colour, head height, expression, photo age.
           Confirm the details on the official page linked in each country card, then crop your photo
           to the exact millimetre size in the{" "}
-          <a href="#/passport-photo-maker">free passport photo maker</a>.
+          <a href="/passport-photo-maker">free passport photo maker</a>.
         </p>
 
         <h2>Which passport photo size do I need?</h2>
@@ -625,7 +628,7 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
           </li>
           <li>
             Crop the photo to the exact size in the maker and print it at actual size — the{" "}
-            <a href="#/photo-printing-guide">photo printing guide</a> shows how.
+            <a href="/photo-printing-guide">photo printing guide</a> shows how.
           </li>
         </ol>
 
@@ -645,7 +648,7 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
           This table is calculated live with the same layout engine the editor uses:{" "}
           {formatDimensions(PHOTO_W, PHOTO_H)} photos, a {MARGIN_MM} mm page margin and {GAP_MM} mm
           gaps between photos. For other photo sizes or spacings, the arrange step in the{" "}
-          <a href="#/passport-photo-maker">photo maker</a> recalculates the grid instantly.
+          <a href="/passport-photo-maker">photo maker</a> recalculates the grid instantly.
         </p>
       </div>
 
@@ -683,7 +686,7 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
             return (
               <a
                 key={id}
-                href={`#/passport-photo-sizes/${id}`}
+                href={`/passport-photo-sizes/${id}`}
                 onClick={(e) => {
                   e.preventDefault();
                   openCountry(id);
@@ -747,7 +750,7 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3">
                   <a
-                    href={`#/passport-photo-sizes/${c.id}`}
+                    href={`/passport-photo-sizes/${c.id}`}
                     onClick={(e) => {
                       e.preventDefault();
                       openCountry(c.id);
@@ -758,7 +761,7 @@ export function SizesPage({ initialCountry }: { initialCountry?: string }) {
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </a>
                   <a
-                    href="#/passport-photo-maker"
+                    href="/passport-photo-maker"
                     className="inline-flex min-h-[44px] items-center rounded-xl border px-4 text-[14px] font-semibold text-foreground/85 transition-colors hover:bg-secondary"
                   >
                     Make this photo

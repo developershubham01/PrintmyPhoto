@@ -3,7 +3,7 @@
  *
  * Plain TypeScript data (no "use client"): imported by client components.
  * Inline links inside p / ul / callout text use the marker format
- * [label](#/route) for internal hash routes and [label](https://url) for
+ * [label](/route) for internal hash routes and [label](https://url) for
  * external sources; the article renderer parses them into real anchors.
  */
 
@@ -42,12 +42,12 @@ export const ARTICLES: BlogArticle[] = [
     blocks: [
       {
         type: "p",
-        text: "Yes — you can make a passport-size photo online for free in about five minutes, without downloading software or paying a studio. You need a phone or digital camera, a plain wall, and a browser-based tool like the [free passport photo maker](#/passport-photo-maker). This guide walks through the full flow, explains what makes a good source photo, and shows why browser-side tools are the privacy-safe choice.",
+        text: "Yes — you can make a passport-size photo online for free in about five minutes, without downloading software or paying a studio. You need a phone or digital camera, a plain wall, and a browser-based tool like the [free passport photo maker](/passport-photo-maker). This guide walks through the full flow, explains what makes a good source photo, and shows why browser-side tools are the privacy-safe choice.",
       },
       { type: "h2", text: "What does 'passport size' actually mean?" },
       {
         type: "p",
-        text: "There is no single worldwide 'passport size'. Most countries use a 35×45 mm portrait, the United States uses a 2×2 inch (50.8×50.8 mm) square, and visa applications can have their own dimensions entirely. Before you start, check the exact size for your document on the [passport photo sizes reference](#/passport-photo-sizes) — picking the right preset up front saves you from re-cropping later.",
+        text: "There is no single worldwide 'passport size'. Most countries use a 35×45 mm portrait, the United States uses a 2×2 inch (50.8×50.8 mm) square, and visa applications can have their own dimensions entirely. Before you start, check the exact size for your document on the [passport photo sizes reference](/passport-photo-sizes) — picking the right preset up front saves you from re-cropping later.",
       },
       { type: "h2", text: "What makes a good source photo?" },
       {
@@ -69,7 +69,7 @@ export const ARTICLES: BlogArticle[] = [
       {
         type: "ol",
         items: [
-          "Upload and crop — drop your photo into the [photo maker](#/passport-photo-maker), choose your country's size preset and align the guide lines with your eyes and chin. The visual walkthrough lives on the [how it works](#/how-it-works) page.",
+          "Upload and crop — drop your photo into the [photo maker](/passport-photo-maker), choose your country's size preset and align the guide lines with your eyes and chin. The visual walkthrough lives on the [how it works](/how-it-works) page.",
           "Adjust — straighten any tilt and fine-tune brightness and contrast until the face is evenly exposed.",
           "Background — optionally remove the original background and replace it with plain white or light grey. Skip this if you already photographed against a clean wall.",
           "Arrange and export — place copies on 4×6 inch or A4 paper and download a print-ready PDF at 300 DPI, or save a single digital image.",
@@ -83,7 +83,7 @@ export const ARTICLES: BlogArticle[] = [
       { type: "h2", text: "What do you get at the end?" },
       {
         type: "p",
-        text: "A correctly cropped photo at 300 DPI, laid out on your chosen paper size with cut-friendly gaps. Print it on photo paper following the [photo printing guide](#/photo-printing-guide), cut along the gaps, and you have prints comparable to a photo studio's — for the price of a sheet of paper.",
+        text: "A correctly cropped photo at 300 DPI, laid out on your chosen paper size with cut-friendly gaps. Print it on photo paper following the [photo printing guide](/photo-printing-guide), cut along the gaps, and you have prints comparable to a photo studio's — for the price of a sheet of paper.",
       },
       {
         type: "callout",
@@ -124,7 +124,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "You can generate this exact size with the [passport photo maker](#/passport-photo-maker) by choosing the India preset, or read the full country page for [Indian passport photo requirements](#/passport-photo-sizes/india). The official Passport Seva portal — [passportindia.gov.in](https://www.passportindia.gov.in) — is the authoritative source for the current rules.",
+        text: "You can generate this exact size with the [passport photo maker](/passport-photo-maker) by choosing the India preset, or read the full country page for [Indian passport photo requirements](/passport-photo-sizes/india). The official Passport Seva portal — [passportindia.gov.in](https://www.passportindia.gov.in) — is the authoritative source for the current rules.",
       },
       { type: "h2", text: "When do you need the 51×51 mm square photo?" },
       {
@@ -154,7 +154,7 @@ export const ARTICLES: BlogArticle[] = [
       { type: "h2", text: "How many Indian passport photos fit on one sheet?" },
       {
         type: "p",
-        text: "On 4×6 inch photo paper with 4 mm margins and 2 mm gaps, six 35×45 mm photos fit in a 2×3 grid. On A4 paper you fit thirty. The dedicated guides cover [printing on 4×6 paper](#/blog/print-passport-photos-on-4x6-paper), [printing on A4 paper](#/blog/print-passport-photos-on-a4-paper) and the arithmetic behind [how many photos fit on 4×6 paper](#/blog/how-many-passport-photos-fit-on-4x6-paper).",
+        text: "On 4×6 inch photo paper with 4 mm margins and 2 mm gaps, six 35×45 mm photos fit in a 2×3 grid. On A4 paper you fit thirty. The dedicated guides cover [printing on 4×6 paper](/blog/print-passport-photos-on-4x6-paper), [printing on A4 paper](/blog/print-passport-photos-on-a4-paper) and the arithmetic behind [how many photos fit on 4×6 paper](/blog/how-many-passport-photos-fit-on-4x6-paper).",
       },
       {
         type: "callout",
@@ -175,13 +175,13 @@ export const ARTICLES: BlogArticle[] = [
     blocks: [
       {
         type: "p",
-        text: "To print passport photos on 4×6 paper: choose the 4×6 inch paper size in the [photo maker](#/passport-photo-maker), arrange the copies in a grid, export a print-ready PDF, and print at Actual size (100% scale) on photo paper. Three settings decide everything — paper size, scale and quality. Get those right and every print measures exactly 35×45 mm.",
+        text: "To print passport photos on 4×6 paper: choose the 4×6 inch paper size in the [photo maker](/passport-photo-maker), arrange the copies in a grid, export a print-ready PDF, and print at Actual size (100% scale) on photo paper. Three settings decide everything — paper size, scale and quality. Get those right and every print measures exactly 35×45 mm.",
       },
       { type: "h2", text: "Step-by-step: from photo to printed sheet" },
       {
         type: "ol",
         items: [
-          "Crop your photo to the size you need — for example 35×45 mm — in the [passport photo maker](#/passport-photo-maker).",
+          "Crop your photo to the size you need — for example 35×45 mm — in the [passport photo maker](/passport-photo-maker).",
           "In the arrange step, select 4×6 inch (101.6 × 152.4 mm) as the paper size.",
           "Let the auto-arrange place as many copies as fit — six for a 35×45 mm photo — or drag them yourself. Keep the gaps between photos; they are your cutting lines.",
           "Download the sheet as a PDF. A PDF keeps its physical dimensions, so the printer knows exactly how big every photo should be.",
@@ -216,7 +216,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "For printers, DPI and paper in more depth, see the [photo printing guide](#/photo-printing-guide). And if you are wondering exactly how many copies squeeze onto one sheet, the answer — with the arithmetic — is in [how many passport photos fit on 4×6 paper](#/blog/how-many-passport-photos-fit-on-4x6-paper).",
+        text: "For printers, DPI and paper in more depth, see the [photo printing guide](/photo-printing-guide). And if you are wondering exactly how many copies squeeze onto one sheet, the answer — with the arithmetic — is in [how many passport photos fit on 4×6 paper](/blog/how-many-passport-photos-fit-on-4x6-paper).",
       },
       { type: "h2", text: "How do you cut the printed photos?" },
       {
@@ -258,13 +258,13 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "These numbers come from the same layout engine that powers the [passport photo maker](#/passport-photo-maker), so arranging the sheet there reproduces exactly these counts with the gaps included.",
+        text: "These numbers come from the same layout engine that powers the [passport photo maker](/passport-photo-maker), so arranging the sheet there reproduces exactly these counts with the gaps included.",
       },
       { type: "h2", text: "Step-by-step: printing an A4 sheet" },
       {
         type: "ol",
         items: [
-          "Crop your photo to the required size in the [photo maker](#/passport-photo-maker).",
+          "Crop your photo to the required size in the [photo maker](/passport-photo-maker).",
           "In the arrange step, choose A4 (210 × 297 mm) as the paper size.",
           "Check the auto-arranged grid — the sheet is centred with even margins, and the gaps between photos double as cutting guides.",
           "Download the PDF and print it on A4 photo paper at Actual size / 100% scale, with fit-to-page turned off and quality set to High.",
@@ -286,7 +286,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "Printing a smaller batch instead? The [4×6 inch printing guide](#/blog/print-passport-photos-on-4x6-paper) covers the standard photo-lab sheet, and the [photo printing guide](#/photo-printing-guide) goes deeper on printer settings and paper choices.",
+        text: "Printing a smaller batch instead? The [4×6 inch printing guide](/blog/print-passport-photos-on-4x6-paper) covers the standard photo-lab sheet, and the [photo printing guide](/photo-printing-guide) goes deeper on printer settings and paper choices.",
       },
       {
         type: "callout",
@@ -329,7 +329,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "The [passport photo maker](#/passport-photo-maker) can replace your background with plain white or light grey after upload, and the [sizes reference](#/passport-photo-sizes) notes the typical requirement per country.",
+        text: "The [passport photo maker](/passport-photo-maker) can replace your background with plain white or light grey after upload, and the [sizes reference](/passport-photo-sizes) notes the typical requirement per country.",
       },
       { type: "h2", text: "What gets a photo rejected?" },
       {
@@ -359,7 +359,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "For the practical steps, read [how to change a passport photo background](#/blog/how-to-change-passport-photo-background) — including the tolerance slider and the cases where replacement is a bad idea.",
+        text: "For the practical steps, read [how to change a passport photo background](/blog/how-to-change-passport-photo-background) — including the tolerance slider and the cases where replacement is a bad idea.",
       },
       {
         type: "callout",
@@ -380,7 +380,7 @@ export const ARTICLES: BlogArticle[] = [
     blocks: [
       {
         type: "p",
-        text: "To change a passport photo background: enable background removal in the [passport photo maker](#/passport-photo-maker), choose plain white or light grey, tune the tolerance slider until the edges look clean, then zoom in and check the hair before exporting. It takes about a minute — here is the detailed walkthrough.",
+        text: "To change a passport photo background: enable background removal in the [passport photo maker](/passport-photo-maker), choose plain white or light grey, tune the tolerance slider until the edges look clean, then zoom in and check the hair before exporting. It takes about a minute — here is the detailed walkthrough.",
       },
       { type: "h2", text: "Step by step: replacing the background" },
       {
@@ -421,7 +421,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "Curious why authorities care so much about the background in the first place? The explanation — biometric face detection and print consistency — is in [passport photo background requirements explained](#/blog/passport-photo-background-requirements).",
+        text: "Curious why authorities care so much about the background in the first place? The explanation — biometric face detection and print consistency — is in [passport photo background requirements explained](/blog/passport-photo-background-requirements).",
       },
       {
         type: "callout",
@@ -442,7 +442,7 @@ export const ARTICLES: BlogArticle[] = [
     blocks: [
       {
         type: "p",
-        text: "Six 35×45 mm passport photos fit on one 4×6 inch sheet — a 2×3 grid — with 4 mm page margins and 2 mm gaps between photos. That is the standard photo-lab layout, and it is exactly what the [passport photo maker](#/passport-photo-maker) produces. Below is the arithmetic behind the number, plus the counts for other photo sizes.",
+        text: "Six 35×45 mm passport photos fit on one 4×6 inch sheet — a 2×3 grid — with 4 mm page margins and 2 mm gaps between photos. That is the standard photo-lab layout, and it is exactly what the [passport photo maker](/passport-photo-maker) produces. Below is the arithmetic behind the number, plus the counts for other photo sizes.",
       },
       { type: "h2", text: "How is the count calculated?" },
       {
@@ -491,7 +491,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "Need a bigger batch? An A4 sheet holds thirty 35×45 mm photos — see [printing passport photos on A4](#/blog/print-passport-photos-on-a4-paper). For printer settings, read [how to print passport photos on 4×6 paper](#/blog/print-passport-photos-on-4x6-paper) or the general [photo printing guide](#/photo-printing-guide).",
+        text: "Need a bigger batch? An A4 sheet holds thirty 35×45 mm photos — see [printing passport photos on A4](/blog/print-passport-photos-on-a4-paper). For printer settings, read [how to print passport photos on 4×6 paper](/blog/print-passport-photos-on-4x6-paper) or the general [photo printing guide](/photo-printing-guide).",
       },
       {
         type: "callout",
@@ -527,7 +527,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "Notice what is missing: layers, masks, curves, plugins. Those are general-purpose editing tools; a passport photo needs a specialised pipeline — which is exactly what the [passport photo maker](#/passport-photo-maker) implements. The visual walkthrough is on the [how it works](#/how-it-works) page.",
+        text: "Notice what is missing: layers, masks, curves, plugins. Those are general-purpose editing tools; a passport photo needs a specialised pipeline — which is exactly what the [passport photo maker](/passport-photo-maker) implements. The visual walkthrough is on the [how it works](/how-it-works) page.",
       },
       { type: "h2", text: "Photoshop vs a free online tool" },
       {
@@ -545,12 +545,12 @@ export const ARTICLES: BlogArticle[] = [
       { type: "h2", text: "What does the browser tool do, end to end?" },
       {
         type: "p",
-        text: "Upload, crop to a country preset, straighten and adjust brightness, optionally replace the background, then arrange copies on 4×6 or A4 and download a print-ready PDF. The whole flow runs in your browser — the photo is never uploaded to a server — and the five-minute version of this workflow is in [how to make passport size photos online for free](#/blog/how-to-make-passport-size-photos-online-free).",
+        text: "Upload, crop to a country preset, straighten and adjust brightness, optionally replace the background, then arrange copies on 4×6 or A4 and download a print-ready PDF. The whole flow runs in your browser — the photo is never uploaded to a server — and the five-minute version of this workflow is in [how to make passport size photos online for free](/blog/how-to-make-passport-size-photos-online-free).",
       },
       { type: "h2", text: "Can you do all of this on a phone?" },
       {
         type: "p",
-        text: "Yes. Shoot the photo with the default camera app (no beauty filters), open the maker in the mobile browser, and follow the same steps. Cropping, the tolerance slider and the PDF export are all built for touch, so you can go from sofa to printable sheet without a computer. For the printing half — paper, settings and cutting — follow the [photo printing guide](#/photo-printing-guide).",
+        text: "Yes. Shoot the photo with the default camera app (no beauty filters), open the maker in the mobile browser, and follow the same steps. Cropping, the tolerance slider and the PDF export are all built for touch, so you can go from sofa to printable sheet without a computer. For the printing half — paper, settings and cutting — follow the [photo printing guide](/photo-printing-guide).",
       },
       { type: "h2", text: "When is Photoshop still worth it?" },
       {
@@ -621,19 +621,19 @@ export const ARTICLES: BlogArticle[] = [
       { type: "h2", text: "Find your country's size in the tool" },
       {
         type: "p",
-        text: "The [passport photo maker](#/passport-photo-maker) ships with presets for all the countries above, and the [sizes reference](#/passport-photo-sizes) lists millimetre, centimetre, inch and 300 DPI pixel values per country. Direct links:",
+        text: "The [passport photo maker](/passport-photo-maker) ships with presets for all the countries above, and the [sizes reference](/passport-photo-sizes) lists millimetre, centimetre, inch and 300 DPI pixel values per country. Direct links:",
       },
       {
         type: "ul",
         items: [
-          "[United States passport photo size](#/passport-photo-sizes/united-states)",
-          "[United Kingdom passport photo size](#/passport-photo-sizes/united-kingdom)",
-          "[India passport photo size](#/passport-photo-sizes/india)",
-          "[Canada passport photo size](#/passport-photo-sizes/canada)",
-          "[Australia passport photo size](#/passport-photo-sizes/australia)",
-          "[Schengen / EU visa photo size](#/passport-photo-sizes/schengen-eu)",
-          "[China passport photo size](#/passport-photo-sizes/china)",
-          "[Japan passport photo size](#/passport-photo-sizes/japan)",
+          "[United States passport photo size](/passport-photo-sizes/united-states)",
+          "[United Kingdom passport photo size](/passport-photo-sizes/united-kingdom)",
+          "[India passport photo size](/passport-photo-sizes/india)",
+          "[Canada passport photo size](/passport-photo-sizes/canada)",
+          "[Australia passport photo size](/passport-photo-sizes/australia)",
+          "[Schengen / EU visa photo size](/passport-photo-sizes/schengen-eu)",
+          "[China passport photo size](/passport-photo-sizes/china)",
+          "[Japan passport photo size](/passport-photo-sizes/japan)",
         ],
       },
       {
@@ -661,16 +661,16 @@ export const ARTICLES: BlogArticle[] = [
       {
         type: "ol",
         items: [
-          "Wrong photo size. Each authority specifies exact dimensions — 35×45 mm for India and the UK, 2×2 inches for the US — and a mismatch is an automatic rejection. Pick your country's preset in the [passport photo maker](#/passport-photo-maker) instead of guessing.",
+          "Wrong photo size. Each authority specifies exact dimensions — 35×45 mm for India and the UK, 2×2 inches for the US — and a mismatch is an automatic rejection. Pick your country's preset in the [passport photo maker](/passport-photo-maker) instead of guessing.",
           "Head too small or too large. Biometric checks measure the head as a share of the photo height; a head that fills the frame or floats in it fails. Use the crop guides to place the top of the head and the chin on the marked lines.",
           "Shadows on the face or background. Overhead bulbs and direct sun throw shadows that automated checks read as defects. Face a window and keep the wall a couple of steps behind you.",
-          "Busy or patterned background. Brick, foliage and curtains make the head outline hard to isolate. Retake against a plain wall, or use the approximate [background replacement](#/blog/passport-photo-background-requirements) — after confirming it is acceptable for your authority.",
+          "Busy or patterned background. Brick, foliage and curtains make the head outline hard to isolate. Retake against a plain wall, or use the approximate [background replacement](/blog/passport-photo-background-requirements) — after confirming it is acceptable for your authority.",
           "An old photo. 'Recent' normally means taken within the last six months, because the photo must match your current face. Retake it — do not dig out a decade-old favourite.",
           "Glare on glasses. Lens reflections can hide your eyes entirely. Tilt the glasses slightly, turn off the flash, or remove the glasses if your authority allows.",
           "Smiling or expressive face. A neutral expression with a closed mouth and open eyes is the requirement almost everywhere — grins, frowns and raised eyebrows all cause trouble.",
           "Low resolution. A screenshot or a compressed chat download turns into a blurry print at 300 DPI. Always start from the original camera file.",
-          "Printing with 'fit to page'. Fit-to-page rescales the sheet and silently changes every photo's size by a few millimetres — enough for rejection. Print at Actual size / 100% as shown in the [4×6 printing guide](#/blog/print-passport-photos-on-4x6-paper).",
-          "Cutting badly. Crooked scissor work that slices into the photo leaves a print smaller than specification. Cut along the gaps with a trimmer or a ruler and craft knife — the [A4 printing guide](#/blog/print-passport-photos-on-a4-paper) shows how.",
+          "Printing with 'fit to page'. Fit-to-page rescales the sheet and silently changes every photo's size by a few millimetres — enough for rejection. Print at Actual size / 100% as shown in the [4×6 printing guide](/blog/print-passport-photos-on-4x6-paper).",
+          "Cutting badly. Crooked scissor work that slices into the photo leaves a print smaller than specification. Cut along the gaps with a trimmer or a ruler and craft knife — the [A4 printing guide](/blog/print-passport-photos-on-a4-paper) shows how.",
         ],
       },
       { type: "h2", text: "What happens if your photo is rejected?" },
@@ -691,7 +691,7 @@ export const ARTICLES: BlogArticle[] = [
       },
       {
         type: "p",
-        text: "More answers live on the [FAQ page](#/faq), and the [photo printing guide](#/photo-printing-guide) covers paper and printer settings in depth.",
+        text: "More answers live on the [FAQ page](/faq), and the [photo printing guide](/photo-printing-guide) covers paper and printer settings in depth.",
       },
       {
         type: "callout",

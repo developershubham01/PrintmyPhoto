@@ -178,9 +178,9 @@ export function AboutPage() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         {[
-          { href: "#/how-it-works", label: "See how it works, step by step" },
-          { href: "#/blog", label: "Read the guides and printing tips" },
-          { href: "#/contact", label: "Say hello or report a bug" },
+          { href: "/how-it-works", label: "See how it works, step by step" },
+          { href: "/blog", label: "Read the guides and printing tips" },
+          { href: "/contact", label: "Say hello or report a bug" },
         ].map((link) => (
           <a
             key={link.href}

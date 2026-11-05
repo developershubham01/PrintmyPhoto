@@ -71,7 +71,7 @@ export function Navbar() {
       >
         {/* Brand logo */}
         <a
-          href="#/"
+          href="/"
           onClick={(e) => {
             e.preventDefault();
             go("/");
@@ -89,7 +89,7 @@ export function Navbar() {
             return (
               <a
                 key={item.href}
-                href={`#${item.href}`}
+                href={item.href}
                 onClick={(e) => {
                   e.preventDefault();
                   go(item.href);
@@ -154,7 +154,7 @@ export function Navbar() {
                     return (
                       <a
                         key={item.href}
-                        href={`#${item.href}`}
+                        href={item.href}
                         onClick={(e) => {
                           e.preventDefault();
                           go(item.href);

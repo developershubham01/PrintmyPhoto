@@ -121,7 +121,7 @@ export function ContactPage() {
           </div>
 
           <a
-            href="#/privacy-policy"
+            href="/privacy-policy"
             className="flex items-center justify-between gap-3 rounded-2xl border bg-card p-5 shadow-card transition-transform hover:-translate-y-0.5"
           >
             <span className="flex items-center gap-2.5 text-[14px] font-medium">

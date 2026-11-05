@@ -86,7 +86,7 @@ export function DisclaimerPage() {
           photo requirements. Those pages are the single source of truth for dimensions,
           background, expression, head coverage, recency rules and whether digital uploads have
           separate standards. Start from our{" "}
-          <a href="#/passport-photo-sizes">passport photo sizes by country</a> reference, then
+          <a href="/passport-photo-sizes">passport photo sizes by country</a> reference, then
           follow the official link for your application.
         </p>
         <h2>No professional or legal advice</h2>

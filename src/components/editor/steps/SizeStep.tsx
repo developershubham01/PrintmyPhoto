@@ -288,7 +288,7 @@ export function SizeStep() {
             final sheet. A millimetre of difference can cause an application to be rejected — the
             editor renders at 300 DPI ({formatPixels(photoSize.widthMm, photoSize.heightMm)}) so
             printed edges stay crisp. See the{" "}
-            <a href="#/passport-photo-sizes">full size guide by country</a> for reference values and
+            <a href="/passport-photo-sizes">full size guide by country</a> for reference values and
             official source links.
           </p>
         </div>

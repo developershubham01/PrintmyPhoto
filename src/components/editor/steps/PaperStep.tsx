@@ -204,7 +204,7 @@ export function PaperStep() {
             <strong>Printing tip.</strong> The downloaded PDF is built at the exact physical size of
             this paper. When printing, choose this paper size in the print dialog and set scaling to
             <em> Actual size / 100%</em> — never “Fit to page”. See the{" "}
-            <a href="#/photo-printing-guide" className="font-semibold text-alma-accent underline underline-offset-2">
+            <a href="/photo-printing-guide" className="font-semibold text-alma-accent underline underline-offset-2">
               printing guide
             </a>{" "}
             for details.

@@ -221,7 +221,7 @@ export function PrivacyPolicyPage() {
         <h2>Contact</h2>
         <p>
           Questions about this policy or about how the tool handles data? Visit the{" "}
-          <a href="#/contact">contact page</a>. The contact form simply composes a message in your
+          <a href="/contact">contact page</a>. The contact form simply composes a message in your
           own email application — nothing is transmitted by the website itself, so please never
           include a photograph in support requests; we do not need one to help.
         </p>

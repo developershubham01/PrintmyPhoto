@@ -19,7 +19,7 @@ function ArticleCard({ article }: { article: BlogArticle }) {
   return (
     <li className="h-full">
       <a
-        href={`#/blog/${article.slug}`}
+        href={`/blog/${article.slug}`}
         className="group flex h-full flex-col rounded-2xl border bg-card p-6 shadow-card outline-none transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-alma-accent/60"
       >
         <div className="flex items-center justify-between gap-3">

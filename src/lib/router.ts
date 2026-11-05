@@ -1,15 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { trackEvent } from "@/lib/analytics";
 
 /**
- * Virtual (hash-based) router.
- *
- * The studio ships as a single Next.js route (`/`) with client-side virtual pages,
- * so every feature works in sandboxed previews where only `/` is served. Each
- * virtual page is a standalone component and can be lifted into a real App Router
- * route in production without changes (see README → "Production routing").
+ * Standard Next.js Path Router.
+ * Clean, standard URLs (/faq, /passport-photo-maker, /passport-photo-sizes, etc.)
+ * with automatic legacy hash redirect support.
  */
 
 export type RouteId =
@@ -52,8 +50,29 @@ const PATH_TO_ROUTE: Record<string, RouteId> = {
   "/blog": "blog",
 };
 
-export function parseHash(hash: string): RouteMatch {
-  const raw = hash.replace(/^#/, "");
+export function parsePath(rawPath: string): RouteMatch {
+  let raw = rawPath || "/";
+  // If a full URL was passed
+  if (raw.startsWith("http://") || raw.startsWith("https://")) {
+    try {
+      raw = new URL(raw).pathname;
+    } catch {
+      // keep raw
+    }
+  }
+  // Strip leading # if present
+  if (raw.startsWith("#")) {
+    raw = raw.replace(/^#/, "");
+  }
+  // Strip queries and hashes
+  raw = raw.split("?")[0].split("#")[0];
+  if (!raw.startsWith("/")) {
+    raw = `/${raw}`;
+  }
+  if (raw.length > 1 && raw.endsWith("/")) {
+    raw = raw.slice(0, -1);
+  }
+
   if (!raw || raw === "/") return { route: "home" };
   const countryMatch = raw.match(/^\/passport-photo-sizes\/([a-z0-9-]+)$/);
   if (countryMatch) return { route: "country", param: countryMatch[1] };
@@ -62,6 +81,8 @@ export function parseHash(hash: string): RouteMatch {
   const route = PATH_TO_ROUTE[raw];
   return { route: route ?? "home" };
 }
+
+export const parseHash = parsePath;
 
 export interface RouteMeta {
   title: string;
@@ -148,6 +169,7 @@ export const ROUTE_META: Record<RouteId, RouteMeta> = {
 };
 
 function setMetaDescription(description: string) {
+  if (typeof document === "undefined") return;
   let el = document.querySelector('meta[name="description"]');
   if (!el) {
     el = document.createElement("meta");
@@ -157,36 +179,57 @@ function setMetaDescription(description: string) {
   el.setAttribute("content", description);
 }
 
-export function useHashRoute(): RouteMatch & { navigate: (to: string) => void } {
-  const [match, setMatch] = useState<RouteMatch>(() =>
-    typeof window === "undefined" ? { route: "home" } : parseHash(window.location.hash),
-  );
+export function useAppRoute(): RouteMatch & { navigate: (to: string) => void } {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [, startTransition] = useTransition();
+
+  // Redirect legacy hash URLs (e.g. `/#/faq` -> `/faq`) without reloading
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash.startsWith("#/")) {
+      const cleanPath = window.location.hash.replace(/^#/, "");
+      window.history.replaceState(null, "", cleanPath);
+      startTransition(() => {
+        router.replace(cleanPath);
+      });
+    }
+  }, [router]);
+
+  const match = parsePath(pathname || "/");
 
   useEffect(() => {
-    const apply = () => {
-      const parsed = parseHash(window.location.hash);
-      setMatch(parsed);
-      const meta = ROUTE_META[parsed.route];
-      if (meta) {
-        document.title = meta.title;
-        setMetaDescription(meta.description);
-      }
-      trackEvent("page_view", { route: parsed.route, param: parsed.param ?? "" });
-    };
-    apply();
-    window.addEventListener("hashchange", apply);
-    return () => window.removeEventListener("hashchange", apply);
-  }, []);
-
-  const navigate = useCallback((to: string) => {
-    const target = to.startsWith("#") ? to : `#${to.startsWith("/") ? to : `/${to}`}`;
-    if (window.location.hash === target) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
+    const meta = ROUTE_META[match.route];
+    if (meta && typeof document !== "undefined") {
+      document.title = meta.title;
+      setMetaDescription(meta.description);
     }
-    window.location.hash = target;
-    window.scrollTo({ top: 0 });
-  }, []);
+    trackEvent("page_view", { route: match.route, param: match.param ?? "" });
+  }, [match.route, match.param]);
+
+  const navigate = useCallback(
+    (to: string) => {
+      let target = to;
+      if (target.startsWith("#/")) {
+        target = target.replace(/^#/, "");
+      } else if (target.startsWith("#")) {
+        target = target.replace(/^#/, "/");
+      } else if (!target.startsWith("/")) {
+        target = `/${target}`;
+      }
+
+      if (pathname === target) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      startTransition(() => {
+        router.push(target);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    [pathname, router],
+  );
 
   return { ...match, navigate };
 }
+
+export const useHashRoute = useAppRoute;

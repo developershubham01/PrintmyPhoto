@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ShieldCheck, Lock, RefreshCcw } from "lucide-react";
 import { useConsentStore } from "@/lib/store/consent-store";
 
@@ -51,7 +52,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="max-w-xs">
             <p className="font-display text-xl font-bold">
-              print<span className="text-alma-collard dark:text-alma-kiwi">my</span>photo
+              Print<span className="text-alma-collard dark:text-alma-kiwi">my</span>Photo
             </p>
             <p className="mt-3 text-[13.5px] leading-relaxed text-muted-foreground">
               Free online passport photo maker and print studio. Crop, customize and arrange
@@ -76,12 +77,12 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
                   <li key={`${col.title}-${link.label}`}>
-                    <a
-                      href={`#${link.href}`}
+                    <Link
+                      href={link.href}
                       className="rounded text-[14px] text-foreground/85 transition-colors hover:text-alma-accent"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -91,7 +92,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-border/70 pt-6 text-[13px] text-muted-foreground md:flex-row md:items-center md:justify-between">
           <p>
-            © {new Date().getFullYear()} printmyphoto. Free forever. Always verify
+            © {new Date().getFullYear()} PrintmyPhoto. Free forever. Always verify
             photo requirements with the official issuing authority.
           </p>
           <div className="flex items-center gap-4">

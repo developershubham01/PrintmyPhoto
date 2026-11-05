@@ -126,17 +126,17 @@ function PrintingFaq() {
 function RelatedLinkCards() {
   const links = [
     {
-      href: "#/passport-photo-sizes",
+      href: "/passport-photo-sizes",
       title: "Passport photo sizes",
       text: "Exact dimensions for every country, with official sources.",
     },
     {
-      href: "#/how-it-works",
+      href: "/how-it-works",
       title: "How the tool works",
       text: "Upload, crop, arrange and download in four phases.",
     },
     {
-      href: "#/blog",
+      href: "/blog",
       title: "Blog and tips",
       text: "More guides on backgrounds, paper and common mistakes.",
     },
@@ -217,8 +217,8 @@ export function PrintingGuidePage() {
         </p>
         <p>
           This guide walks through the whole process with the sheets produced by our{" "}
-          <a href="#/passport-photo-maker">free passport photo maker</a>. If you are still choosing
-          a size, start with the <a href="#/passport-photo-sizes">size directory</a>; each country
+          <a href="/passport-photo-maker">free passport photo maker</a>. If you are still choosing
+          a size, start with the <a href="/passport-photo-sizes">size directory</a>; each country
           entry links to the official rules.
         </p>
 
@@ -254,7 +254,7 @@ export function PrintingGuidePage() {
         </p>
         <ol>
           <li>
-            Open the <a href="#/passport-photo-maker">photo maker</a>, upload your photo and crop it
+            Open the <a href="/passport-photo-maker">photo maker</a>, upload your photo and crop it
             to your country&rsquo;s size.
           </li>
           <li>
@@ -472,7 +472,7 @@ export function PrintingGuidePage() {
           The table below uses the same numbers as the maker&rsquo;s arrange step:{" "}
           {formatDimensions(PHOTO_W, PHOTO_H)} photos, a {MARGIN_MM} mm page margin and {GAP_MM} mm
           gaps. Need a different photo size? The{" "}
-          <a href="#/passport-photo-sizes">size directory</a> lists every option.
+          <a href="/passport-photo-sizes">size directory</a> lists every option.
         </p>
       </div>
 
@@ -629,7 +629,7 @@ export function PrintingGuidePage() {
           home prints. Requirements vary by authority, document type and application channel, and
           they change over time. This tool does not guarantee compliance — verify size, background,
           head position and photo age against the official source for your document before
-          submitting anything. Questions? The <a href="#/faq">FAQ</a> covers the most common ones.
+          submitting anything. Questions? The <a href="/faq">FAQ</a> covers the most common ones.
         </p>
       </div>
     </PageShell>

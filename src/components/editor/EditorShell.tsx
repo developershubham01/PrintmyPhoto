@@ -226,15 +226,15 @@ export function EditorShell() {
           {step !== "download" && (
             <div className="mt-10 flex items-center justify-between border-t border-border/70 pt-6">
               <Button
-                variant="ghost"
-                className="h-12 rounded-xl px-4"
+                variant="outline"
+                className="h-12 rounded-xl border-2 border-alma-collard/25 bg-secondary/80 px-6 text-[15px] font-semibold text-alma-collard shadow-xs transition-all hover:border-alma-collard/50 hover:bg-accent hover:text-alma-collard active:scale-[0.99] disabled:opacity-35 disabled:cursor-not-allowed dark:border-alma-kiwi/30 dark:bg-card dark:text-alma-kiwi dark:hover:bg-alma-kiwi/15 cursor-pointer"
                 onClick={prevStep}
                 disabled={stepIndex === 0}
               >
-                <ChevronLeft className="mr-1 h-4 w-4" aria-hidden="true" /> Back
+                <ChevronLeft className="mr-1.5 h-4 w-4" aria-hidden="true" /> Back
               </Button>
               <Button
-                className="btn-gradient h-12 rounded-xl px-7 text-[15px] font-semibold"
+                className="btn-gradient h-12 rounded-xl px-7 text-[15px] font-semibold cursor-pointer"
                 onClick={guardNext}
                 disabled={step === "upload" && !sourceBitmap}
               >
@@ -244,8 +244,12 @@ export function EditorShell() {
           )}
           {step === "download" && (
             <div className="mt-10 flex justify-start border-t border-border/70 pt-6">
-              <Button variant="ghost" className="h-12 rounded-xl px-4" onClick={prevStep}>
-                <ChevronLeft className="mr-1 h-4 w-4" aria-hidden="true" /> Back to preview
+              <Button
+                variant="outline"
+                className="h-12 rounded-xl border-2 border-alma-collard/25 bg-secondary/80 px-6 text-[15px] font-semibold text-alma-collard shadow-xs transition-all hover:border-alma-collard/50 hover:bg-accent hover:text-alma-collard active:scale-[0.99] dark:border-alma-kiwi/30 dark:bg-card dark:text-alma-kiwi dark:hover:bg-alma-kiwi/15 cursor-pointer"
+                onClick={prevStep}
+              >
+                <ChevronLeft className="mr-1.5 h-4 w-4" aria-hidden="true" /> Back to preview
               </Button>
             </div>
           )}

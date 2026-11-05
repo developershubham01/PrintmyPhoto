@@ -67,7 +67,7 @@ export function TermsPage() {
           accepted by any government agency, consulate or other authority, nor that any size,
           background or quality preset matches the rules that apply to your specific application.
           Always verify current requirements with the official issuing authority before you submit
-          an application or pay for printing. Our <a href="#/disclaimer">disclaimer</a> expands on
+          an application or pay for printing. Our <a href="/disclaimer">disclaimer</a> expands on
           this point.
         </p>
 
@@ -136,7 +136,7 @@ export function TermsPage() {
 
         <h2>Contact</h2>
         <p>
-          Questions about these terms? Get in touch through the <a href="#/contact">contact
+          Questions about these terms? Get in touch through the <a href="/contact">contact
             page</a> — the form composes an email in your own mail application, so nothing is
           transmitted by the website itself.
         </p>

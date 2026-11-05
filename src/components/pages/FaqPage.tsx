@@ -56,21 +56,21 @@ const QUICK_ANSWERS = [
     question: "What is the standard passport photo size?",
     answer:
       "There is no single worldwide standard. The most common international format is 35 × 45 mm; the United States uses a 2 × 2 inch (51 × 51 mm) square and Canada uses 50 × 70 mm. Always verify with the issuing authority.",
-    href: "#/passport-photo-sizes",
+    href: "/passport-photo-sizes",
     linkLabel: "Browse all sizes",
   },
   {
     question: "How many photos fit on 4 × 6 inch paper?",
     answer:
       "Six 35 × 45 mm photos fit in a 2 × 3 grid with typical margins and gaps. The maker recalculates the count live for your size, margins and spacing.",
-    href: "#/photo-printing-guide",
+    href: "/photo-printing-guide",
     linkLabel: "Read the printing guide",
   },
   {
     question: "Is the tool really free?",
     answer:
       "Yes — no account, no signup, no payment and no watermark. Your photo is processed locally in your browser and is never uploaded to a server.",
-    href: "#/passport-photo-maker",
+    href: "/passport-photo-maker",
     linkLabel: "Open the photo maker",
   },
 ];
@@ -113,7 +113,7 @@ export function FaqPage() {
           States uses a 2 × 2 inch square, and Canada uses 50 × 70 mm. Whatever your country, the
           issuing authority&rsquo;s current guidance is the only rule that counts, so every answer
           below ends the same way: verify with the official source before you submit. The{" "}
-          <a href="#/passport-photo-sizes">size directory</a> links to each authority&rsquo;s page.
+          <a href="/passport-photo-sizes">size directory</a> links to each authority&rsquo;s page.
         </p>
         <p>
           The answers are grouped by theme. Expand a question for the short answer and the context
@@ -165,14 +165,14 @@ export function FaqPage() {
         <h2>Still stuck?</h2>
         <p>
           If your question is not answered above, tell us via the{" "}
-          <a href="#/contact">contact page</a> and we will do our best to help. For anything about
+          <a href="/contact">contact page</a> and we will do our best to help. For anything about
           requirements — sizes, backgrounds, head position, photo age — the answer that matters is
           always on the official page of your issuing authority, linked from each entry in the{" "}
-          <a href="#/passport-photo-sizes">size directory</a>.
+          <a href="/passport-photo-sizes">size directory</a>.
         </p>
         <p>
-          Want to go deeper? The <a href="#/photo-printing-guide">photo printing guide</a> covers
-          printer settings and paper choices step by step, and the <a href="#/blog">blog</a> is
+          Want to go deeper? The <a href="/photo-printing-guide">photo printing guide</a> covers
+          printer settings and paper choices step by step, and the <a href="/blog">blog</a> is
           where we publish new guides on making and printing passport photos.
         </p>
       </div>

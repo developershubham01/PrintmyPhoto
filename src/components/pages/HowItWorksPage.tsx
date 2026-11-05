@@ -248,16 +248,16 @@ export function HowItWorksPage() {
         <h2>What should I do after downloading?</h2>
         <p>
           Three sensible next moves. First, print the sheet — at home on photo paper (
-          <a href="#/photo-printing-guide">the printing guide</a> covers scaling, paper and
+          <a href="/photo-printing-guide">the printing guide</a> covers scaling, paper and
           troubleshooting) or take the file to a photo shop or kiosk and ask for an actual-size
           print. Second, verify the current rules for your document against the official source
-          linked in our <a href="#/passport-photo-sizes">size directory</a> — background, head
+          linked in our <a href="/passport-photo-sizes">size directory</a> — background, head
           position and photo age matter as much as the millimetres. Third, keep a copy of the
           digital file: many application channels now ask for an upload as well as prints.
         </p>
         <p>
-          Something still unclear? The <a href="#/faq">FAQ</a> answers the questions we hear most,
-          and the <a href="#/blog">blog</a> goes deeper into backgrounds, paper choices and common
+          Something still unclear? The <a href="/faq">FAQ</a> answers the questions we hear most,
+          and the <a href="/blog">blog</a> goes deeper into backgrounds, paper choices and common
           mistakes.
         </p>
       </div>
@@ -269,7 +269,7 @@ export function HowItWorksPage() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <a
-          href="#/faq"
+          href="/faq"
           className="group rounded-2xl border bg-card p-6 shadow-card transition-transform hover:-translate-y-0.5"
         >
           <p className="font-display text-[16px] font-semibold text-alma-collard group-hover:text-alma-accent">
@@ -280,7 +280,7 @@ export function HowItWorksPage() {
           </p>
         </a>
         <a
-          href="#/blog"
+          href="/blog"
           className="group rounded-2xl border bg-card p-6 shadow-card transition-transform hover:-translate-y-0.5"
         >
           <p className="font-display text-[16px] font-semibold text-alma-collard group-hover:text-alma-accent">

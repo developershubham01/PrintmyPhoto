@@ -138,7 +138,7 @@ export function CookiePolicyPage() {
           No tracking pixels of our own, no social-media widgets, no session identifiers, no
           advertising profiles created by us, and nothing that could identify you personally. For
           the full picture of how your photos and data are handled, read the{" "}
-          <a href="#/privacy-policy">privacy policy</a>.
+          <a href="/privacy-policy">privacy policy</a>.
         </p>
       </div>
 
