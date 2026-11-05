@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "@fontsource-variable/fraunces";
 import "@fontsource-variable/archivo";
 import "./globals.css";
@@ -96,6 +97,14 @@ export default function RootLayout({
           {children}
           <Toaster position="bottom-center" richColors closeButton />
         </ThemeProvider>
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
+          <Script
+            id="google-adsense"
+            strategy="afterInteractive"
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+          />
+        )}
         <JsonLd data={organizationSchema()} />
         <JsonLd data={webSiteSchema()} />
         <JsonLd data={webApplicationSchema()} />
