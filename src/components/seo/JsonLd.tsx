@@ -31,6 +31,10 @@ export function organizationSchema() {
     logo: `${SITE.url}${SITE.logo}`,
     description:
       "Free online passport photo maker and print studio. Crop, customize and arrange passport-size photos on printable paper and download a print-ready PDF — no account required.",
+    sameAs: [
+      "https://github.com/developershubham01",
+      "https://www.linkedin.com/in/developershubham01",
+    ],
   };
 }
 
@@ -58,6 +62,11 @@ export function webApplicationSchema() {
     operatingSystem: "Any (browser-based)",
     browserRequirements: "Requires a modern browser with HTML5 Canvas support",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    creator: {
+      "@type": "Person",
+      name: "Shubham",
+      url: "https://github.com/developershubham01",
+    },
     description:
       "Free passport photo maker: upload, crop, customize the background, arrange photos on 4×6, A4, Letter and other paper sizes, and download a print-ready 300 DPI PDF, JPG or PNG. No sign-up; photos are processed locally in your browser.",
     featureList: [

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShieldCheck, Lock, RefreshCcw } from "lucide-react";
+import { ShieldCheck, Lock, RefreshCcw, Github, Linkedin, Code2 } from "lucide-react";
 import { useConsentStore } from "@/lib/store/consent-store";
 
 const COLUMNS: Array<{ title: string; links: Array<{ label: string; href: string }> }> = [
@@ -67,6 +67,30 @@ export function Footer() {
                 this website.
               </span>
             </div>
+
+            {/* Social / Developer Links */}
+            <div className="mt-5 flex items-center gap-2.5">
+              <a
+                href="https://github.com/developershubham01"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-border/70 bg-card px-3 py-1.5 text-[12.5px] font-medium text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-alma-collard/50 hover:bg-accent hover:text-alma-collard shadow-xs"
+                aria-label="GitHub profile of Shubham"
+              >
+                <Github className="h-4 w-4" aria-hidden="true" />
+                <span>GitHub</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/shubham-sharma395"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-border/70 bg-card px-3 py-1.5 text-[12.5px] font-medium text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-alma-accent/50 hover:bg-accent hover:text-alma-accent shadow-xs"
+                aria-label="LinkedIn profile of Shubham"
+              >
+                <Linkedin className="h-4 w-4" aria-hidden="true" />
+                <span>LinkedIn</span>
+              </a>
+            </div>
           </div>
 
           {COLUMNS.map((col) => (
@@ -90,12 +114,28 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-border/70 pt-6 text-[13px] text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>
-            © {new Date().getFullYear()} PrintmyPhoto. Free forever. Always verify
-            photo requirements with the official issuing authority.
-          </p>
-          <div className="flex items-center gap-4">
+        <div className="mt-12 flex flex-col gap-4 border-t border-border/70 pt-6 text-[13px] text-muted-foreground md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1">
+            <p>
+              © {new Date().getFullYear()} PrintmyPhoto. Free forever. Always verify
+              photo requirements with the official issuing authority.
+            </p>
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-muted-foreground/90">
+              <span>
+                Designed &amp; Deployed by{" "}
+                <a
+                  href="https://github.com/developershubham01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-alma-collard"
+                >
+                  Shubham Sharma
+                </a>
+              </span>
+
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
             <span className="inline-flex items-center gap-1.5">
               <Lock className="h-3.5 w-3.5" aria-hidden="true" /> Browser-side processing
             </span>
