@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   ],
   applicationName: SITE.name,
   authors: [
-    { name: "Shubham", url: "https://github.com/developershubham01" },
+    { name: "Shubham Sharma", url: "https://github.com/developershubham01" },
     { name: SITE.name, url: SITE.url },
   ],
   creator: "Shubham (developershubham01)",
@@ -76,6 +76,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
   category: "photography",
+  verification: {
+    google: "AuouB7FfoY0LntvW6UFh5Dz1xMnz8XbJoLT9hAtmtwY",
+  },
   other: {
     "google-adsense-account": "ca-pub-2733238354385302",
   },
@@ -96,10 +99,33 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
+        {/* Google Tag Manager (noscript fallback) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MSDBP6K9"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <ThemeProvider>
           {children}
           <Toaster position="bottom-center" richColors closeButton />
         </ThemeProvider>
+        {/* Google Tag Manager */}
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-MSDBP6K9"
+        />
+        <Script id="gtm-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
+        {/* Google AdSense */}
         <Script
           id="google-adsense"
           strategy="afterInteractive"
