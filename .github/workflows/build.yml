@@ -29,3 +29,4 @@ jobs:
         NEXT_PUBLIC_SITE_URL: https://printmyphoto.vercel.app
         NEXT_PUBLIC_ADSENSE_ENABLED: 1
         NEXT_PUBLIC_ADSENSE_CLIENT: ca-pub-2733238354385302
+

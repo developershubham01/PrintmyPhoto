@@ -84,7 +84,7 @@ function Hero() {
             className="inline-flex items-center gap-2 rounded-full border bg-card/80 px-3.5 py-1.5 text-[12px] font-semibold text-alma-collard dark:text-alma-kiwi shadow-card"
           >
             <Sparkles className="h-3.5 w-3.5 text-alma-orange" aria-hidden="true" />
-            Free forever · No sign-up · Photos never leave your browser
+            printmyphoto · Free forever · No sign-up · 100% private in your browser
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
@@ -111,9 +111,10 @@ function Hero() {
             transition={{ delay: 0.12 }}
             className="mt-5 max-w-xl text-[16px] sm:text-[17px] leading-relaxed text-muted-foreground"
           >
-            Create, customize and print passport-size photographs in minutes. Upload your photo,
-            choose your size and download a print-ready sheet — arranged automatically on 4×6, A4,
-            Letter and more.
+            Create, customize and print official passport-size photographs in minutes with{" "}
+            <strong className="font-semibold text-foreground">printmyphoto</strong>. Upload your photo,
+            crop to country dimensions (US 2×2 in, UK/India 35×45 mm, Canada 50×70 mm), remove backgrounds,
+            and download a print-ready 300 DPI sheet arranged automatically on 4×6, A4, or Letter paper.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -825,39 +826,72 @@ function PrivacySection() {
   );
 }
 
-/* ───────────────────────── Mid educational (GEO) ───────────────────────── */
+/* ───────────────────────── Mid educational (GEO & AEO) ───────────────────────── */
 
 function MidEducational() {
   return (
-    <section aria-labelledby="edu-heading" className="container-editorial max-w-[860px] py-6 md:py-10">
-      <h2 id="edu-heading" className="font-display text-2xl font-semibold md:text-3xl">
-        Passport photo printing, explained
-      </h2>
-      <div className="prose-alma mt-4">
-        <p>
-          A passport photo is one of the few documents where a single millimetre matters. Most
-          countries accept photos in the ICAO-style 35 × 45 mm format — the United Kingdom, India,
-          Australia and the Schengen visa process all use it — while the United States requires a
-          2 × 2 inch (51 × 51 mm) square and Canada uses 50 × 70 mm. Because the requirements are
-          set by each issuing authority and change over time, always confirm the size, background
-          and recency rules in the official guidance for your document before you print.
+    <section aria-labelledby="edu-heading" className="container-editorial max-w-[860px] py-10 md:py-16">
+      <div className="rounded-[28px] border bg-card p-6 sm:p-10 shadow-card">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-alma-accent">
+          Complete Guide & Direct Answers
         </p>
-        <p>
-          Printing at home is straightforward with the right settings. The two rules that matter
-          are paper and scale: choose the exact paper size you actually loaded, and set the print
-          dialog to <strong>Actual size / 100%</strong> — never “Fit to page”, which silently
-          rescales your sheet and makes every photo the wrong size. Photo papers like 4 × 6 inch
-          postcard stock fit six 35 × 45 mm photos with tidy margins, while a single A4 sheet holds
-          around thirty — enough for an entire family&apos;s renewals.
-        </p>
-        <p>
-          Quality depends on your source photo. A crisp, well-lit image holds 300 DPI at passport
-          size easily; screenshots and heavily compressed images may not, which is why the editor
-          measures the effective resolution of your crop and tells you before you commit to
-          printing. Learn more in the{" "}
-          <Link href="/photo-printing-guide" className="font-semibold text-alma-accent underline underline-offset-2">photo printing guide</Link> or browse{" "}
-          <Link href="/passport-photo-sizes" className="font-semibold text-alma-accent underline underline-offset-2">sizes by country</Link>.
-        </p>
+        <h2 id="edu-heading" className="mt-2 font-display text-2xl font-semibold md:text-3xl">
+          Everything You Need to Know About Passport Photo Making & Printing
+        </h2>
+        
+        <article className="prose-alma mt-6 space-y-6 text-[15px] leading-relaxed text-muted-foreground">
+          <div className="rounded-xl border border-border/80 bg-secondary/40 p-5">
+            <h3 className="font-display text-lg font-semibold text-foreground">
+              What is printmyphoto?
+            </h3>
+            <p className="mt-2">
+              <strong className="text-foreground">printmyphoto</strong> is a free, web-based passport
+              and ID photo maker and 4×6 print studio. It allows you to upload any portrait photo, crop it
+              to official country dimensions (including US 2×2 inches, UK/India 35×45 mm, and Canada 50×70 mm),
+              remove or change backgrounds to solid white or off-white, and automatically tile multiple copies
+              onto standard photo paper (4×6 in, 5×7 in, A4) at crisp 300 DPI resolution. The tool runs 100%
+              locally in your web browser with zero server uploads for complete biometric privacy.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-display text-lg font-semibold text-foreground">
+              How to print passport photos at Walgreens, CVS, or home for pennies
+            </h3>
+            <p className="mt-2">
+              Passport photo services at drugstores typically charge \$15.00 to \$18.00 for two small photos.
+              With <strong className="text-foreground">printmyphoto</strong>, you can download a 4×6 inch photo
+              sheet containing 4 to 6 photos and print it as a standard 4×6 photo print at Walgreens, CVS, Walmart,
+              or any local pharmacy for under \$0.40. Simply upload your 4×6 print-ready JPG to their 4×6 photo
+              department (not their passport service), pick up the glossy print, and cut them out.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-display text-lg font-semibold text-foreground">
+              Passport photo printing: scale & resolution rules
+            </h3>
+            <p className="mt-2">
+              A passport photo is one of the few documents where a single millimetre matters. Most
+              countries accept photos in the ICAO-style 35 × 45 mm format — the United Kingdom, India,
+              Australia and the Schengen visa process all use it — while the United States requires a
+              2 × 2 inch (51 × 51 mm) square and Canada uses 50 × 70 mm. Because requirements change, always
+              confirm the exact specifications on official government portals before applying.
+            </p>
+            <p className="mt-2">
+              When printing at home, the golden rule is: <strong>Actual size / 100%</strong>. Never check
+              “Fit to page” or “Shrink to fit”, as that distorts official biometric head proportions. Learn
+              more in the{" "}
+              <Link href="/photo-printing-guide" className="font-semibold text-alma-accent underline underline-offset-2">
+                photo printing guide
+              </Link>{" "}
+              or browse{" "}
+              <Link href="/passport-photo-sizes" className="font-semibold text-alma-accent underline underline-offset-2">
+                official sizes by country
+              </Link>.
+            </p>
+          </div>
+        </article>
       </div>
     </section>
   );
