@@ -14,10 +14,23 @@ export function JsonLd({ data }: JsonLdProps) {
   );
 }
 
+function getSiteUrl() {
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return "https://printmyphoto.vercel.app";
+}
+
 export const SITE = {
   name: "printmyphoto",
   alternateName: "PrintMyPhoto",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://printmyphoto.com",
+  url: getSiteUrl(),
   logo: "/icon.svg",
 };
 
